@@ -1,0 +1,75 @@
+﻿<Window x:Class="Ideassoccer.BaseStation.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ideassoccer.BaseStation.UI"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="512"
+        Width="720"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <local:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Margin="0 0 0 10">
+            <StackPanel Orientation="Horizontal"
+                        Margin="0 0 0 10">
+                <Button x:Name="btnStart"
+                        Padding="10 0"
+                        Margin="0 0 10 0"
+                        Click="btnStart_Click"
+                        IsEnabled="{Binding IsUdpStarted, Converter={StaticResource InverseBooleanConverter}}"
+                        >Start</Button>
+                <Button x:Name="btnStop"
+                        Padding="10 0"
+                        Click="btnStop_Click"
+                        IsEnabled="{Binding IsUdpStarted}"
+                        >Stop</Button>
+            </StackPanel>
+            <TextBlock Text="Send message: " />
+            <TextBox x:Name="textBoxSend"
+                     KeyUp="textBoxSend_KeyUp" />
+            <StackPanel Margin="0 5 0 0"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <ComboBox x:Name="cbSendDest"
+                          Margin="0 0 2.5 0"
+                          Width="200"
+                          ItemsSource="{Binding CbItems}"
+                          SelectedValuePath="Key"
+                          DisplayMemberPath="Value"
+                          SelectedIndex="0" />
+                <Button Grid.Column="1"
+                        Margin="2.5 0 0 0"
+                        Content="Send"
+                        Width="72"
+                        Click="Button_Click" />
+            </StackPanel>
+        </StackPanel>
+        <Grid Grid.Row="1"
+              Margin="0 10 0 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <local:RobotUserControl x:Name="robot1Control"
+                                    Grid.Column="0"
+                                    Margin="0 0 10 0"
+                                    DataContext="{Binding Robot1}"/>
+            <local:RobotUserControl x:Name="robot2Control"
+                                    Grid.Column="1"
+                                    Margin="10 0 0 0"
+                                    DataContext="{Binding Robot2}"/>
+        </Grid>
+    </Grid>
+</Window>
