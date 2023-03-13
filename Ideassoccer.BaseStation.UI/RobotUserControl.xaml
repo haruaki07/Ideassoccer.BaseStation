@@ -28,16 +28,24 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="Auto" />
+                    <!--<ColumnDefinition Width="Auto" />-->
                 </Grid.ColumnDefinitions>
 
                 <TextBox Grid.Column="0"
                          Name="txtAddr"
                          Text="{Binding IPEndPoint, Converter={StaticResource IPEndPointToAddressConverter}}"
                          IsReadOnly="True"/>
-                <Button Grid.Column="1"
+                <!--<Button Name="btnPing"
+                        Grid.Column="1"
                         Margin="10 0 0 0"
                         Padding="10 0"
-                        Click="Button_Click">Edit</Button>
+                        Click="btnPing_Click">Ping</Button>-->
+                <Button 
+                    Name="btnEdit"
+                    Grid.Column="2"
+                        Margin="10 0 0 0"
+                        Padding="10 0"
+                        Click="btnEdit_Click">Edit</Button>
             </Grid>
         </StackPanel>
 

@@ -1,4 +1,8 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,7 +18,7 @@ namespace Ideassoccer.BaseStation.UI
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
             InputDialogWindow inputDialog = new InputDialogWindow("IP Address:", txtAddr.Text);
             if (inputDialog.ShowDialog() == true)
@@ -26,13 +30,23 @@ namespace Ideassoccer.BaseStation.UI
                     return;
                 }
 
-                ((Robot)DataContext).IPEndPoint = ep;
+                GetDataContext().IPEndPoint = ep;
             }
         }
 
         private void dgCtxClear_Click(object sender, RoutedEventArgs e)
         {
-            ((Robot)DataContext).Packets.Clear();
+            GetDataContext().Packets.Clear();
+        }
+
+        private void btnPing_Click(object sender, RoutedEventArgs e)
+        {
+            // todo
+        }
+
+        private Robot GetDataContext()
+        {
+            return ((Robot)DataContext);
         }
     }
 }
