@@ -2,8 +2,52 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Ideassoccer.BaseStation.UI"
-             StartupUri="MainWindow.xaml">
+             StartupUri="MainWindow2.xaml">
     <Application.Resources>
-         
+        <BitmapImage x:Key="imgField"
+                     UriSource="/Ideassoccer.BaseStation.UI;component/Resources/field.png" />
+        <BitmapImage x:Key="imgIconRun"
+                     UriSource="/Ideassoccer.BaseStation.UI;component/Resources/icons/run.png" />
+        <BitmapImage x:Key="imgIconStop"
+                     UriSource="/Ideassoccer.BaseStation.UI;component/Resources/icons/stop.png" />
+
+        <!--application styles-->
+        <Style x:Key="btnStyleBase"
+               TargetType="Button">
+            <Setter Property="Padding"
+                    Value="12 0" />
+            <Setter Property="Height"
+                    Value="28" />
+        </Style>
+        <Style TargetType="Button"
+               BasedOn="{StaticResource btnStyleBase}" />
+
+        <Style x:Key="textStyleBase"
+               TargetType="TextBox">
+            <Setter Property="Height"
+                    Value="28" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center" />
+        </Style>
+        <Style TargetType="TextBox"
+               BasedOn="{StaticResource textStyleBase}" />
+
+        <Style x:Key="cbStyleBase"
+               TargetType="ComboBox">
+            <Setter Property="Height"
+                    Value="28" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center" />
+        </Style>
+        <Style TargetType="ComboBox"
+               BasedOn="{StaticResource cbStyleBase}" />
+
+        <Style x:Key="imgStyleIconBase"
+               TargetType="Image">
+            <Setter Property="Width"
+                    Value="16" />
+            <Setter Property="Height"
+                    Value="16" />
+        </Style>
     </Application.Resources>
 </Application>

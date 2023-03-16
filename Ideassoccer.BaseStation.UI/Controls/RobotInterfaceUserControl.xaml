@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="Ideassoccer.BaseStation.UI.Controls.RobotInterfaceUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Ideassoccer.BaseStation.UI.Controls"
+             xmlns:root="clr-namespace:Ideassoccer.BaseStation.UI"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <root:BytesToStringConverter x:Key="BytesToStringConverter" />
+        <root:IPEndPointToAddressConverter x:Key="IPEndPointToAddressConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1"
+                    Margin="0 0 0 10">
+            <TextBlock Text="IP Endpoint: " />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox Name="txtAddr"
+                         Text="{Binding IPEndPoint, Converter={StaticResource IPEndPointToAddressConverter}}"
+                         IsReadOnly="True" />
+                <!--<Button Name="btnPing"
+                        Grid.Column="1"
+                        Margin="10 0 0 0"
+                        Click="btnPing_Click">Ping</Button>-->
+                <Button Grid.Column="1"
+                        Name="btnEdit"
+                        Margin="10 0 0 0"
+                        Click="btnEdit_Click">Edit</Button>
+            </Grid>
+        </StackPanel>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Packet Log: " />
+            <DataGrid Grid.Row="1"
+                      IsReadOnly="True"
+                      AutoGenerateColumns="False"
+                      ItemsSource="{Binding Packets}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Type"
+                                        Binding="{Binding Type}" />
+                    <DataGridTextColumn Header="Time"
+                                        Binding="{Binding Time}" />
+                    <DataGridTextColumn Header="Message"
+                                        Binding="{Binding Bytes, Converter={StaticResource BytesToStringConverter}}" />
+                </DataGrid.Columns>
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Name="dgCtxClear"
+                                  Header="Clear"
+                                  Click="dgCtxClear_Click" />
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</UserControl>

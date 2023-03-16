@@ -24,9 +24,14 @@ namespace Ideassoccer.BaseStation.UI
 
         public async Task Listen()
         {
+            await Listen(null);
+        }
+
+        public async Task Listen(IPEndPoint? ep)
+        {
             try
             {
-                _socket = new UdpClient(_ipEndPoint);
+                _socket = new UdpClient(ep ?? _ipEndPoint);
 
                 Started?.Invoke(this, EventArgs.Empty);
 

@@ -7,4 +7,16 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\field.png" />
+    <None Remove="Resources\icons\run.png" />
+    <None Remove="Resources\icons\stop.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\field.png" />
+    <Resource Include="Resources\icons\run.png" />
+    <Resource Include="Resources\icons\stop.png" />
+  </ItemGroup>
+
 </Project>
