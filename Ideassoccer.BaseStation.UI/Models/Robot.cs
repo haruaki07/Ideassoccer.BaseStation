@@ -1,7 +1,8 @@
-﻿using System.ComponentModel;
+﻿using Ideassoccer.BaseStation.UI.Utilities;
+using System.ComponentModel;
 using System.Net;
 
-namespace Ideassoccer.BaseStation.UI
+namespace Ideassoccer.BaseStation.UI.Models
 {
     public class Robot : INotifyPropertyChanged
     {
@@ -15,23 +16,24 @@ namespace Ideassoccer.BaseStation.UI
         {
             get
             {
-                return this.name;
+                return name;
             }
             set
             {
-                this.name = value;
-                this.NotifyPropertyChanged("Name");
+                name = value;
+                NotifyPropertyChanged("Name");
             }
         }
-        public IPEndPoint IPEndPoint { 
+        public IPEndPoint IPEndPoint
+        {
             get
             {
-                return this.ipEndPoint;
+                return ipEndPoint;
             }
             set
             {
-                this.ipEndPoint = value;
-                this.NotifyPropertyChanged("IPEndPoint");
+                ipEndPoint = value;
+                NotifyPropertyChanged("IPEndPoint");
             }
         }
 
@@ -39,7 +41,7 @@ namespace Ideassoccer.BaseStation.UI
         {
             get
             {
-                return this.id;
+                return id;
             }
         }
 
@@ -49,18 +51,18 @@ namespace Ideassoccer.BaseStation.UI
         {
             this.id = id;
             this.name = name;
-            this.ipEndPoint = endpoint;
-            this.Packets = new ObservableStack<Packet>();
+            ipEndPoint = endpoint;
+            Packets = new ObservableStack<Packet>();
         }
 
         public string GetIPAddress()
         {
-            return this.IPEndPoint.Address.ToString();
+            return IPEndPoint.Address.ToString();
         }
 
         private void NotifyPropertyChanged(string propName)
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

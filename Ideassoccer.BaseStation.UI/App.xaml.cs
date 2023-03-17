@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Ideassoccer.BaseStation.UI.Models;
+using System.Windows;
 
 namespace Ideassoccer.BaseStation.UI
 {

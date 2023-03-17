@@ -1,152 +1,81 @@
-﻿using System;
+﻿using Ideassoccer.BaseStation.UI.Utilities;
+using Ideassoccer.BaseStation.UI.ViewModels;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
+using System.Windows.Interop;
 
 namespace Ideassoccer.BaseStation.UI
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow2.xaml
     /// </summary>
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : Window
     {
         private Udp _udp;
-        private bool _udpStarted = false;
 
-        public Dictionary<string, string> CbItems { get; set; }
-        public Robot Robot1 { get; set; }
-        public Robot Robot2 { get; set; }
-        public bool IsUdpStarted
-        {
-            get
-            {
-                return _udpStarted;
-            }
-            set
-            {
-                _udpStarted = value;
-                NotifyPropertyChanged("IsUdpStarted");
-            }
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public int UdpPort { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = this;
 
-            Robot1 = new Robot("1", "Robot 1", new IPEndPoint(IPAddress.Parse("192.168.8.150"), 4242));
-            Robot2 = new Robot("2", "Robot 2", new IPEndPoint(IPAddress.Parse("192.168.8.151"), 4242));
+            UdpPort = 4242;
+            _udp = new Udp(new IPEndPoint(IPAddress.Any, UdpPort));
+            var mainVm = new MainViewModel(_udp);
 
-            CbItems = new Dictionary<string, string>
+            DataContext = mainVm;
+
+            var cbItems = new Dictionary<string, string>
             {
-                { "0", "All" },
-                { Robot1.Id, "Robot 1" },
-                { Robot2.Id, "Robot 2" }
+                { "0", "All"},
+                {mainVm.Robot1.Id, mainVm.Robot1.Name },
+                {mainVm.Robot2.Id, mainVm.Robot2.Name },
             };
+            baseStationControl.DataContext = new BaseStationViewModel(mainVm.UdpClient, cbItems);
 
-            _udp = new Udp(new IPEndPoint(IPAddress.Any, 4242));
-            _udp.Started += _udp_Started;
-            _udp.Stopped += _udp_Stopped;
-            _udp.Received += _udp_Received;
+            robot1Control.DataContext = new RobotViewModel(mainVm.Robot1);
+            robot2Control.DataContext = new RobotViewModel(mainVm.Robot2);
         }
 
-        private void _udp_Started(object? sender, EventArgs e)
+        /// <summary>
+        ///  Disable title bar double-click and prevent move window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_SourceInitialized(object sender, EventArgs e)
         {
-            IsUdpStarted = true;
+            HwndSource source = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
+            source.AddHook(new HwndSourceHook(WndProc));
         }
 
-        private void _udp_Stopped(object? sender, EventArgs e)
-        {
-            IsUdpStarted = false;
-        }
+        private const int WM_NCLBUTTONDBLCLK = 0x00A3; // title bar double click
+        private const int WM_SYSCOMMAND = 0x0112;
+        private const int SC_MOVE = 0xF010;
 
-        private void _udp_Received(object? sender, ReceivedEventArgs e)
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            IPEndPoint from = e.From;
-
-            // If packet is from robot1 then forward to robot2
-            if (from.Address.ToString() == Robot1.IPEndPoint.Address.ToString())
+            switch (msg)
             {
-                Robot1.Packets.Push(new Packet(DateTime.Now, PacketType.Recv, e.Bytes));
-                _ = SendPacket(Robot2.Id, e.Bytes);
+                case WM_SYSCOMMAND:
+                    int command = wParam.ToInt32() & 0xfff0;
+                    if (command == SC_MOVE)
+                        handled = true;
+                    break;
             }
-            // If packet is from robot2 then forward to robot1
-            else if (from.Address.ToString() == Robot2.IPEndPoint.Address.ToString())
+
+            if (msg == WM_NCLBUTTONDBLCLK)
             {
-                Robot2.Packets.Push(new Packet(DateTime.Now, PacketType.Recv, e.Bytes));
-                _ = SendPacket(Robot1.Id, e.Bytes);
+                handled = true;  //prevent double click from maximizing the window.
             }
+
+            return IntPtr.Zero;
         }
 
-
-        private async Task SendPacket(string dest, byte[] dgram)
-        {
-            if (dgram.Length <= 0) return;
-
-            if (dest == "0")
-            {
-                foreach (var r in new Robot[] { Robot1, Robot2 })
-                {
-                    await _udp.Send(r.IPEndPoint, dgram);
-                    r.Packets.Push(new Packet(DateTime.Now, PacketType.Send, dgram));
-                }
-            } else if (dest == Robot1.Id)
-            {
-                await _udp.Send(Robot1.IPEndPoint, dgram);
-                Robot1.Packets.Push(new Packet(DateTime.Now, PacketType.Send, dgram));
-            }
-            else if (dest == Robot2.Id)
-            {
-                await _udp.Send(Robot2.IPEndPoint, dgram);
-                Robot2.Packets.Push(new Packet(DateTime.Now, PacketType.Send, dgram));
-            }
-        }
-
-        private async Task SendPacket(string dest, string msg)
-        {
-            await SendPacket(dest, Encoding.UTF8.GetBytes(msg.Trim()));
-        }
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var msg = textBoxSend.Text;
-            var dest = (string)cbSendDest.SelectedValue;
-
-            _ = SendPacket(dest, msg);
-
-            textBoxSend.Focus();
-        }
-
-        private void textBoxSend_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                var msg = textBoxSend.Text;
-                var dest = (string)cbSendDest.SelectedValue;
-
-                _ = SendPacket(dest, msg);
-            }
-        }
-
-        private void btnStart_Click(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _ = _udp.Listen();
         }
-
-        private void btnStop_Click(object sender, RoutedEventArgs e)
-        {
-            _udp.StopListening();
-        }
-
-        private void NotifyPropertyChanged(string propName)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-        }
     }
-
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Ideassoccer.BaseStation.UI
+namespace Ideassoccer.BaseStation.UI.Models
 {
     public class Packet
     {
@@ -13,7 +13,7 @@ namespace Ideassoccer.BaseStation.UI
         {
             this.Time = Time;
             this.Type = Type;
-            this.Bytes = bytes;
+            Bytes = bytes;
         }
 
         public string MessageString()
@@ -28,7 +28,8 @@ namespace Ideassoccer.BaseStation.UI
     }
 
 
-    public enum PacketType {
+    public enum PacketType
+    {
         Recv,
         Send
     }

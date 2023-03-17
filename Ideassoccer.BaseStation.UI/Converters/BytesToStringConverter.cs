@@ -2,7 +2,7 @@
 using System.Text;
 using System.Windows.Data;
 
-namespace Ideassoccer.BaseStation.UI
+namespace Ideassoccer.BaseStation.UI.Converters
 {
     public class BytesToStringConverter : IValueConverter
     {

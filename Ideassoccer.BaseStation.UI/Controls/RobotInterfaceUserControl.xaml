@@ -4,13 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Ideassoccer.BaseStation.UI.Controls"
-             xmlns:root="clr-namespace:Ideassoccer.BaseStation.UI"
+             xmlns:converters="clr-namespace:Ideassoccer.BaseStation.UI.Converters"
              xmlns:viewmodels="clr-namespace:Ideassoccer.BaseStation.UI.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewmodels:RobotViewModel}"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <root:BytesToStringConverter x:Key="BytesToStringConverter" />
-        <root:IPEndPointToAddressConverter x:Key="IPEndPointToAddressConverter" />
+        <converters:BytesToStringConverter x:Key="BytesToStringConverter" />
+        <converters:IPEndPointToAddressConverter x:Key="IPEndPointToAddressConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>

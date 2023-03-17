@@ -2,7 +2,7 @@
 using System.Net;
 using System.Windows.Data;
 
-namespace Ideassoccer.BaseStation.UI
+namespace Ideassoccer.BaseStation.UI.Converters
 {
     class IPEndPointToAddressConverter: IValueConverter
     {

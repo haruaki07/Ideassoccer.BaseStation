@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ideassoccer.BaseStation.UI.Models;
+using System;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;

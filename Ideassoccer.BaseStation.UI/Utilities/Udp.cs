@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Ideassoccer.BaseStation.UI
+namespace Ideassoccer.BaseStation.UI.Utilities
 {
     public class Udp
     {

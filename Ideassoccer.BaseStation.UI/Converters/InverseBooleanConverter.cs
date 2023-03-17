@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Data;
 
-namespace Ideassoccer.BaseStation.UI
+namespace Ideassoccer.BaseStation.UI.Converters
 {
     [ValueConversion(typeof(bool), typeof(bool))]
     internal class InverseBooleanConverter : IValueConverter

@@ -1,22 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Resources\field.png" />
-    <None Remove="Resources\icons\run.png" />
-    <None Remove="Resources\icons\stop.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Resources\field.png" />
+		<None Remove="Resources\icons\run.png" />
+		<None Remove="Resources\icons\stop.png" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Resource Include="Resources\field.png" />
-    <Resource Include="Resources\icons\run.png" />
-    <Resource Include="Resources\icons\stop.png" />
-  </ItemGroup>
-
+	<ItemGroup>
+		<Resource Include="Resources\field.png" />
+		<Resource Include="Resources\icons\run.png" />
+		<Resource Include="Resources\icons\stop.png" />
+	</ItemGroup>
 </Project>

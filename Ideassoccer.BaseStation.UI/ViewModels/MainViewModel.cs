@@ -2,6 +2,7 @@
 using System;
 using System.Net;
 using System.Collections.Generic;
+using Ideassoccer.BaseStation.UI.Models;
 
 namespace Ideassoccer.BaseStation.UI.ViewModels
 {
