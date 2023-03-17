@@ -4,21 +4,41 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Ideassoccer.BaseStation.UI.Controls"
+             xmlns:viewmodel="clr-namespace:Ideassoccer.BaseStation.UI.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodel:BaseStationViewModel}"
              mc:Ignorable="d">
+    <!--TODO: fix, this can only work if user control is focused-->
+    <!--<UserControl.InputBindings>
+        <KeyBinding Command="{Binding BroadcastMessageCommand}"
+                    CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.Start}}"
+                    Key="F5" />
+        <KeyBinding Command="{Binding BroadcastMessageCommand}"
+                    CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.Stop}}"
+                    Key="F5"
+                    Modifiers="Shift" />
+    </UserControl.InputBindings>-->
+
     <Grid>
         <StackPanel>
             <StackPanel>
                 <TextBlock>Send message:</TextBlock>
-                <TextBox />
+                <TextBox Name="txtMsg">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding SendMessageCommand}"
+                                    CommandParameter="{Binding ElementName=txtMsg, Path=Text}"
+                                    Key="Return" />
+                    </TextBox.InputBindings>
+                </TextBox>
                 <WrapPanel HorizontalAlignment="Right"
                            Margin="0 10 0 0">
-                    <ComboBox SelectedIndex="0"
-                              Width="200">
-                        <ComboBoxItem>All</ComboBoxItem>
-                        <ComboBoxItem>Robot 1</ComboBoxItem>
-                        <ComboBoxItem>Robot 2</ComboBoxItem>
-                    </ComboBox>
-                    <Button Margin="10 0 0 0">Send</Button>
+                    <ComboBox Width="200"
+                              ItemsSource="{Binding CbItems}"
+                              SelectedIndex="{Binding SelectedDest}"
+                              SelectedValuePath="Key"
+                              DisplayMemberPath="Value" />
+                    <Button Margin="10 0 0 0"
+                            Command="{Binding SendMessageCommand}"
+                            CommandParameter="{Binding ElementName=txtMsg, Path=Text}">Send</Button>
                 </WrapPanel>
             </StackPanel>
             <UniformGrid Columns="3"
@@ -31,24 +51,30 @@
                     </Style>
                 </UniformGrid.Resources>
 
-                <Button>
+                <Button Command="{Binding BroadcastMessageCommand}"
+                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.Start}}">
                     <WrapPanel>
                         <Image Source="{StaticResource imgIconRun}"
                                Style="{StaticResource imgStyleIconBase}" />
-                        <TextBlock>Start (F5)</TextBlock>
+                        <TextBlock>Start</TextBlock>
                     </WrapPanel>
                 </Button>
-                <Button>
+                <Button Command="{Binding BroadcastMessageCommand}"
+                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.Stop}}">
                     <WrapPanel>
                         <Image Source="{StaticResource imgIconStop}"
                                Style="{StaticResource imgStyleIconBase}" />
-                        <TextBlock>Stop (Shift+F5)</TextBlock>
+                        <TextBlock>Stop</TextBlock>
                     </WrapPanel>
                 </Button>
-                <Button>Ping</Button>
-                <Button>Kick-Off</Button>
-                <Button>Corner Kick</Button>
-                <Button>Drop Ball</Button>
+                <Button Command="{Binding BroadcastMessageCommand}"
+                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.Ping}}">Ping</Button>
+                <Button Command="{Binding BroadcastMessageCommand}"
+                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.KickOff}}">Kick-Off</Button>
+                <Button Command="{Binding BroadcastMessageCommand}"
+                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.CornerKick}}">Corner Kick</Button>
+                <Button Command="{Binding BroadcastMessageCommand}"
+                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.DropBall}}">Drop Ball</Button>
             </UniformGrid>
         </StackPanel>
     </Grid>

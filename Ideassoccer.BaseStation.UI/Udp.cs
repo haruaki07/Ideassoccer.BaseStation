@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace Ideassoccer.BaseStation.UI
 {
-    internal class Udp
+    public class Udp
     {
         private UdpClient _socket;
         private IPEndPoint _ipEndPoint;
@@ -106,7 +106,7 @@ namespace Ideassoccer.BaseStation.UI
             return cancelSource;
         }
     }
-    internal class ReceivedEventArgs : EventArgs
+    public class ReceivedEventArgs : EventArgs
     {
         public byte[] Bytes { get; }
         public IPEndPoint From { get; }

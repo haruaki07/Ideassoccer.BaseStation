@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ideassoccer.BaseStation.UI"
         xmlns:uc="clr-namespace:Ideassoccer.BaseStation.UI.Controls"
+        xmlns:viewmodel="clr-namespace:Ideassoccer.BaseStation.UI.ViewModels"
         mc:Ignorable="d"
         Title="Ideassoccer BaseStation"
         Height="720"
@@ -12,7 +13,11 @@
         MaxHeight="{Binding Source={x:Static SystemParameters.MaximizedPrimaryScreenHeight}}"
         WindowState="Maximized"
         ResizeMode="CanMinimize"
-        SourceInitialized="Window_SourceInitialized">
+        SourceInitialized="Window_SourceInitialized"
+        Loaded="Window_Loaded">
+    <Window.DataContext>
+        <viewmodel:MainViewModel />
+    </Window.DataContext>
     <Grid Margin="5 0 5 5">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"
@@ -39,10 +44,10 @@
             </GroupBox>
 
             <GroupBox Grid.Column="2"
-                      Header="Robot 2">
+                      Header="{Binding Robot2.Name}">
                 <uc:RobotInterfaceUserControl x:Name="robot2Control"
                                               Margin="10"
-                                              DataContext="{Binding Robot1}" />
+                                              DataContext="{Binding Robot2}" />
             </GroupBox>
         </Grid>
 
@@ -52,7 +57,7 @@
             </Grid.ColumnDefinitions>
 
             <GroupBox Header="BaseStation Control">
-                <uc:BaseStationInterfaceUserControl Margin="10" />
+                <uc:BaseStationInterfaceUserControl x:Name="baseStationControl" Margin="10" />
             </GroupBox>
         </Grid>
     </Grid>

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Ideassoccer.BaseStation.UI.Utilities;
+using Ideassoccer.BaseStation.UI.ViewModels;
+using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Windows;
 using System.Windows.Interop;
@@ -10,16 +13,39 @@ namespace Ideassoccer.BaseStation.UI
     /// </summary>
     public partial class MainWindow2 : Window
     {
-        public Robot Robot1 { get; set; }
+        private Udp _udp;
+
+        public int UdpPort { get; set; }
 
         public MainWindow2()
         {
             InitializeComponent();
-            DataContext = this;
 
-            Robot1 = new Robot("1", "Robot 1", new IPEndPoint(IPAddress.Parse("192.168.8.150"), 4242));
+            UdpPort = 4242;
+            _udp = new Udp(new IPEndPoint(IPAddress.Any, UdpPort));
+            var mainVm = new MainViewModel();
+            var robotUdpClient = new RobotUdpClient(_udp, new Dictionary<string, Robot>
+            {
+                { mainVm.Robot1.Id, mainVm.Robot1},
+                { mainVm.Robot2.Id, mainVm.Robot2},
+            });
+
+            DataContext = mainVm;
+
+            var cbItems = new Dictionary<string, string>
+            {
+                { "0", "All"},
+                {mainVm.Robot1.Id, mainVm.Robot1.Name },
+                {mainVm.Robot2.Id, mainVm.Robot2.Name },
+            };
+            baseStationControl.DataContext = new BaseStationViewModel(robotUdpClient, cbItems);
         }
 
+        /// <summary>
+        ///  Disable title bar double-click and prevent move window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_SourceInitialized(object sender, EventArgs e)
         {
             HwndSource source = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle);
@@ -47,6 +73,11 @@ namespace Ideassoccer.BaseStation.UI
             }
 
             return IntPtr.Zero;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            _ = _udp.Listen();
         }
     }
 }
