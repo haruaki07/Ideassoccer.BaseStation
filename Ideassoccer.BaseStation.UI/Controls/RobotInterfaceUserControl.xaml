@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Ideassoccer.BaseStation.UI.Controls"
              xmlns:root="clr-namespace:Ideassoccer.BaseStation.UI"
+             xmlns:viewmodels="clr-namespace:Ideassoccer.BaseStation.UI.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:RobotViewModel}"
              mc:Ignorable="d">
     <UserControl.Resources>
         <root:BytesToStringConverter x:Key="BytesToStringConverter" />
@@ -26,7 +28,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBox Name="txtAddr"
-                         Text="{Binding IPEndPoint, Converter={StaticResource IPEndPointToAddressConverter}}"
+                         Text="{Binding Robot.IPEndPoint, Converter={StaticResource IPEndPointToAddressConverter}}"
                          IsReadOnly="True" />
                 <!--<Button Name="btnPing"
                         Grid.Column="1"
@@ -35,7 +37,7 @@
                 <Button Grid.Column="1"
                         Name="btnEdit"
                         Margin="10 0 0 0"
-                        Click="btnEdit_Click">Edit</Button>
+                        Command="{Binding EditEndpointCommand}">Edit</Button>
             </Grid>
         </StackPanel>
 
@@ -49,7 +51,7 @@
             <DataGrid Grid.Row="1"
                       IsReadOnly="True"
                       AutoGenerateColumns="False"
-                      ItemsSource="{Binding Packets}">
+                      ItemsSource="{Binding Robot.Packets}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Type"
                                         Binding="{Binding Type}" />
@@ -62,7 +64,8 @@
                     <ContextMenu>
                         <MenuItem Name="dgCtxClear"
                                   Header="Clear"
-                                  Click="dgCtxClear_Click" />
+                                  Click="dgCtxClear_Click"
+                                  Command="{Binding ClearPacketsCommand}" />
                     </ContextMenu>
                 </DataGrid.ContextMenu>
             </DataGrid>

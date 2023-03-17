@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Text;
 using System.Threading.Tasks;
-using Robots = System.Collections.Generic.Dictionary<string, Ideassoccer.BaseStation.UI.Robot>;
+using System.Windows.Documents;
 
 namespace Ideassoccer.BaseStation.UI.Utilities
 {
@@ -17,6 +17,11 @@ namespace Ideassoccer.BaseStation.UI.Utilities
             _robots = robots;
         }
 
+        public async Task Send(string destId, byte[] message)
+        {
+            await Send(destId, Encoding.UTF8.GetString(message));
+        }
+
         public async Task Send(string destId, string message)
         {
             byte[] msg = Encoding.UTF8.GetBytes(message);
@@ -27,20 +32,16 @@ namespace Ideassoccer.BaseStation.UI.Utilities
                 if (_robots.TryGetValue(destId, out robot!))
                 {
                     await _udp.Send(robot.IPEndPoint, msg);
+                    robot.Packets.Push(new Packet(DateTime.Now, PacketType.Send, msg));
                     return;
                 }
             }
 
-            var tasks = new List<Task>();
-
             foreach (var robot in _robots)
             {
-                var task = new Task(async () => await _udp.Send(robot.Value.IPEndPoint, msg));
-                task.Start();
-                tasks.Add(task);
+                robot.Value.Packets.Push(new Packet(DateTime.Now, PacketType.Send, msg));
+                _ = _udp.Send(robot.Value.IPEndPoint, msg);
             }
-
-            await Task.WhenAll(tasks);
         }
     }
 }
