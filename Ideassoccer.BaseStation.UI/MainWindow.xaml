@@ -1,19 +1,22 @@
-﻿<Window x:Class="Ideassoccer.BaseStation.UI.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Ideassoccer.BaseStation.UI"
-        xmlns:uc="clr-namespace:Ideassoccer.BaseStation.UI.Controls"
-        xmlns:viewmodel="clr-namespace:Ideassoccer.BaseStation.UI.ViewModels"
-        d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
-        mc:Ignorable="d"
-        Title="Ideassoccer BaseStation"
-        Height="720"
-        Width="1366"
-        MaxHeight="{Binding Source={x:Static SystemParameters.MaximizedPrimaryScreenHeight}}"
-        WindowState="Maximized"
-        Loaded="Window_Loaded">
+﻿<!--bg and fg is workaround to fix design time window style-->
+<CustomChromeWindow x:Class="Ideassoccer.BaseStation.UI.MainWindow"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:local="clr-namespace:Ideassoccer.BaseStation.UI"
+                    xmlns:uc="clr-namespace:Ideassoccer.BaseStation.UI.Controls"
+                    xmlns:viewmodel="clr-namespace:Ideassoccer.BaseStation.UI.ViewModels"
+                    d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
+                    mc:Ignorable="d"
+                    Title="Ideassoccer BaseStation"
+                    Height="720"
+                    Width="1366"
+                    MaxHeight="{Binding Source={x:Static SystemParameters.MaximizedPrimaryScreenHeight}}"
+                    WindowState="Maximized"
+                    Loaded="Window_Loaded"
+                    Background="{DynamicResource SystemColorsWindow}"
+                    Foreground="{DynamicResource SystemColorsWindowText}">
     <Grid Margin="5 0 5 5">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"
@@ -56,4 +59,4 @@
             </GroupBox>
         </Grid>
     </Grid>
-</Window>
+</CustomChromeWindow>

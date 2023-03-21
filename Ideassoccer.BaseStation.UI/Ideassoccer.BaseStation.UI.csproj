@@ -14,6 +14,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="AakStudio.Shell.UI" Version="0.1.5-alpha-0711" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Resource Include="Resources\field.png" />
 		<Resource Include="Resources\icons\run.png" />
 		<Resource Include="Resources\icons\stop.png" />

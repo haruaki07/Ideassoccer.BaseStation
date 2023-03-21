@@ -4,50 +4,61 @@
              xmlns:local="clr-namespace:Ideassoccer.BaseStation.UI"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <BitmapImage x:Key="imgField"
-                     UriSource="/Ideassoccer.BaseStation.UI;component/Resources/field.png" />
-        <BitmapImage x:Key="imgIconRun"
-                     UriSource="/Ideassoccer.BaseStation.UI;component/Resources/icons/run.png" />
-        <BitmapImage x:Key="imgIconStop"
-                     UriSource="/Ideassoccer.BaseStation.UI;component/Resources/icons/stop.png" />
+        <ResourceDictionary>
+            <!--theme-->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/AakStudio.Shell.UI;component/Themes/VisualStudio2019/DarkTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-        <!--application styles-->
-        <Style x:Key="btnStyleBase"
-               TargetType="Button">
-            <Setter Property="Padding"
-                    Value="12 0" />
-            <Setter Property="Height"
-                    Value="28" />
-        </Style>
-        <Style TargetType="Button"
-               BasedOn="{StaticResource btnStyleBase}" />
+            <!--images-->
+            <BitmapImage x:Key="imgField"
+                         UriSource="/Ideassoccer.BaseStation.UI;component/Resources/field.png" />
+            <BitmapImage x:Key="imgIconRun"
+                         UriSource="/Ideassoccer.BaseStation.UI;component/Resources/icons/run.png" />
+            <BitmapImage x:Key="imgIconStop"
+                         UriSource="/Ideassoccer.BaseStation.UI;component/Resources/icons/stop.png" />
 
-        <Style x:Key="textStyleBase"
-               TargetType="TextBox">
-            <Setter Property="Height"
-                    Value="28" />
-            <Setter Property="VerticalContentAlignment"
-                    Value="Center" />
-        </Style>
-        <Style TargetType="TextBox"
-               BasedOn="{StaticResource textStyleBase}" />
+            <!--application styles-->
+            <Style x:Key="btnStyleBase"
+                   TargetType="Button"
+                   BasedOn="{StaticResource ButtonBaseStyle}">
+                <Setter Property="Padding"
+                        Value="12 0" />
+                <Setter Property="Height"
+                        Value="28" />
+            </Style>
+            <Style TargetType="Button"
+                   BasedOn="{StaticResource btnStyleBase}" />
 
-        <Style x:Key="cbStyleBase"
-               TargetType="ComboBox">
-            <Setter Property="Height"
-                    Value="28" />
-            <Setter Property="VerticalContentAlignment"
-                    Value="Center" />
-        </Style>
-        <Style TargetType="ComboBox"
-               BasedOn="{StaticResource cbStyleBase}" />
+            <Style x:Key="textStyleBase"
+                   TargetType="TextBox"
+                   BasedOn="{StaticResource TextBoxBaseStyle}">
+                <Setter Property="Height"
+                        Value="28" />
+                <Setter Property="VerticalContentAlignment"
+                        Value="Center" />
+            </Style>
+            <Style TargetType="TextBox"
+                   BasedOn="{StaticResource textStyleBase}" />
 
-        <Style x:Key="imgStyleIconBase"
-               TargetType="Image">
-            <Setter Property="Width"
-                    Value="16" />
-            <Setter Property="Height"
-                    Value="16" />
-        </Style>
+            <Style x:Key="cbStyleBase"
+                   TargetType="ComboBox"
+                   BasedOn="{StaticResource ComboBoxBaseStyle}">
+                <Setter Property="Height"
+                        Value="28" />
+                <Setter Property="VerticalContentAlignment"
+                        Value="Center" />
+            </Style>
+            <Style TargetType="ComboBox"
+                   BasedOn="{StaticResource cbStyleBase}" />
+
+            <Style x:Key="imgStyleIconBase"
+                   TargetType="Image">
+                <Setter Property="Width"
+                        Value="16" />
+                <Setter Property="Height"
+                        Value="16" />
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

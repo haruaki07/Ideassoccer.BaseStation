@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AakStudio.Shell.UI.Controls;
+using System;
 using System.Windows;
 
 namespace Ideassoccer.BaseStation.UI
@@ -6,7 +7,7 @@ namespace Ideassoccer.BaseStation.UI
     /// <summary>
     /// Interaction logic for InputDialogWindow.xaml
     /// </summary>
-    public partial class InputDialogWindow : Window
+    public partial class InputDialogWindow : CustomChromeWindow
     {
         public InputDialogWindow(string label, string defaultValue)
         {

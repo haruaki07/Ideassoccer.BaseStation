@@ -30,10 +30,6 @@
                 <TextBox Name="txtAddr"
                          Text="{Binding Robot.IPEndPoint, Converter={StaticResource IPEndPointToAddressConverter}}"
                          IsReadOnly="True" />
-                <!--<Button Name="btnPing"
-                        Grid.Column="1"
-                        Margin="10 0 0 0"
-                        Click="btnPing_Click">Ping</Button>-->
                 <Button Grid.Column="1"
                         Name="btnEdit"
                         Margin="10 0 0 0"
@@ -48,27 +44,29 @@
             </Grid.RowDefinitions>
 
             <TextBlock Text="Packet Log: " />
-            <DataGrid Grid.Row="1"
-                      IsReadOnly="True"
-                      AutoGenerateColumns="False"
-                      ItemsSource="{Binding Robot.Packets}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Type"
-                                        Binding="{Binding Type}" />
-                    <DataGridTextColumn Header="Time"
-                                        Binding="{Binding Time}" />
-                    <DataGridTextColumn Header="Message"
-                                        Binding="{Binding Bytes, Converter={StaticResource BytesToStringConverter}}" />
-                </DataGrid.Columns>
-                <DataGrid.ContextMenu>
+            <ListView Grid.Row="1" ItemsSource="{Binding Robot.Packets}">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn Header="Type"
+                                            DisplayMemberBinding="{Binding Type}" />
+                            <GridViewColumn Header="Time"
+                                            DisplayMemberBinding="{Binding Time}" />
+                            <GridViewColumn Header="Message"
+                                            DisplayMemberBinding="{Binding Bytes, Converter={StaticResource BytesToStringConverter}}" />
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+
+                <ListView.ContextMenu>
                     <ContextMenu>
                         <MenuItem Name="dgCtxClear"
                                   Header="Clear"
                                   Click="dgCtxClear_Click"
                                   Command="{Binding ClearPacketsCommand}" />
                     </ContextMenu>
-                </DataGrid.ContextMenu>
-            </DataGrid>
+                </ListView.ContextMenu>
+            </ListView>
         </Grid>
     </Grid>
 </UserControl>
