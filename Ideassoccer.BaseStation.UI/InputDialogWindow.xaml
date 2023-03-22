@@ -9,7 +9,9 @@
                     SizeToContent="WidthAndHeight"
                     WindowStartupLocation="CenterScreen"
                     ContentRendered="Window_ContentRendered"
-                    ResizeMode="NoResize">
+                    ResizeMode="NoResize"
+                    d:Background="{StaticResource SystemColorsWindow}"
+                    d:Foreground="{StaticResource SystemColorsWindowText}">
     <Grid Margin="15">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />

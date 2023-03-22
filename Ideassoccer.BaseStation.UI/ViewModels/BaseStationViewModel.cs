@@ -1,9 +1,11 @@
 ﻿using Ideassoccer.BaseStation.UI.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace Ideassoccer.BaseStation.UI.ViewModels
 {
@@ -26,14 +28,21 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
             set => RaisePropertyChanged(ref _selectedDest, value);
         }
 
+        public struct Icons
+        {
+            public BitmapImage Start => new(new Uri("pack://application:,,,/Ideassoccer.BaseStation.UI;component/Resources/icons/run.png"));
+            public BitmapImage Stop => new(new Uri("pack://application:,,,/Ideassoccer.BaseStation.UI;component/Resources/icons/stop.png"));
+        }
+        public Icons Icon => new Icons();
+
         public BaseStationViewModel(RobotUdpClient udpClient, Dictionary<string, string> cbItems)
         {
             _udpClient = udpClient;
             _cbItems = cbItems;
             _selectedDest = 0;
 
-            this.SendMessageCommand = new CommandParam<string>(HandleSendMessageCommand);
-            this.BroadcastMessageCommand = new CommandParam<string>(HandleBroadcastMessageCommand);
+            SendMessageCommand = new CommandParam<string>(HandleSendMessageCommand);
+            BroadcastMessageCommand = new CommandParam<string>(HandleBroadcastMessageCommand);
         }
 
         private void HandleSendMessageCommand(string msg)

@@ -16,9 +16,6 @@ namespace Ideassoccer.BaseStation.UI.Controls
         {
             InitializeComponent();
             this.DataContext = new PositionViewModel();
-
-            var bg = Application.Current.FindResource("imgField") as BitmapImage;
-            canvasRoot.Background = new ImageBrush(bg);
         }
     }
 }

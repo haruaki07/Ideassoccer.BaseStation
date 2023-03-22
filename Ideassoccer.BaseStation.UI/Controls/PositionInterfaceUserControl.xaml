@@ -4,17 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Ideassoccer.BaseStation.UI.Controls"
+             xmlns:viewmodels="clr-namespace:Ideassoccer.BaseStation.UI.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:PositionViewModel}"
              mc:Ignorable="d">
     <Grid>
         <Canvas Name="canvasRoot"
-                Width="512"
-                Height="329"
-                Background="lime">
+                Background="{Binding CanvasBackground}"
+                Width="{Binding CanvasBackground.ImageSource.Width}"
+                Height="{Binding CanvasBackground.ImageSource.Height}"
+                d:Width="512"
+                d:Height="329"
+                d:Background="Lime">
             <Canvas Name="canvasMain"
                     Canvas.Top="17"
                     Canvas.Left="35"
                     Width="441"
-                    Height="294">
+                    Height="28">
             </Canvas>
         </Canvas>
     </Grid>

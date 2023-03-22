@@ -54,16 +54,16 @@
                 <Button Command="{Binding BroadcastMessageCommand}"
                         CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.Start}}">
                     <WrapPanel>
-                        <Image Source="{StaticResource imgIconRun}"
-                               Style="{StaticResource imgStyleIconBase}" />
+                        <Image Source="{Binding Icon.Start}"
+                               Style="{StaticResource imgStyleIconBase}" Margin="0 0 3 0" />
                         <TextBlock>Start</TextBlock>
                     </WrapPanel>
                 </Button>
                 <Button Command="{Binding BroadcastMessageCommand}"
                         CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.Stop}}">
                     <WrapPanel>
-                        <Image Source="{StaticResource imgIconStop}"
-                               Style="{StaticResource imgStyleIconBase}" />
+                        <Image Source="{Binding Icon.Stop}"
+                               Style="{StaticResource imgStyleIconBase}" Margin="0 0 3 0" />
                         <TextBlock>Stop</TextBlock>
                     </WrapPanel>
                 </Button>

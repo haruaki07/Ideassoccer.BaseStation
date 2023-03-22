@@ -10,14 +10,6 @@
                 <ResourceDictionary Source="/AakStudio.Shell.UI;component/Themes/VisualStudio2019/DarkTheme.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <!--images-->
-            <BitmapImage x:Key="imgField"
-                         UriSource="/Ideassoccer.BaseStation.UI;component/Resources/field.png" />
-            <BitmapImage x:Key="imgIconRun"
-                         UriSource="/Ideassoccer.BaseStation.UI;component/Resources/icons/run.png" />
-            <BitmapImage x:Key="imgIconStop"
-                         UriSource="/Ideassoccer.BaseStation.UI;component/Resources/icons/stop.png" />
-
             <!--application styles-->
             <Style x:Key="btnStyleBase"
                    TargetType="Button"
