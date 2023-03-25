@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
@@ -49,6 +47,7 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
         {
             _ = _udpClient.Send(_cbItems.ElementAt(SelectedDest).Key, msg);
         }
+
         private void HandleBroadcastMessageCommand(string msg)
         {
             // 0 means all robot

@@ -9,11 +9,6 @@ namespace Ideassoccer.BaseStation.UI.Views
     /// </summary>
     public partial class BaseStationControlView : UserControl
     {
-        public BaseStationViewModel ViewModel
-        {
-            get => (BaseStationViewModel)DataContext;
-        }
-
         public BaseStationControlView()
         {
             InitializeComponent();

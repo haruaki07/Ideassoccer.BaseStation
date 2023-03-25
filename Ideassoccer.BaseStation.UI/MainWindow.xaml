@@ -7,6 +7,7 @@
                     xmlns:local="clr-namespace:Ideassoccer.BaseStation.UI"
                     xmlns:view="clr-namespace:Ideassoccer.BaseStation.UI.Views"
                     xmlns:viewmodel="clr-namespace:Ideassoccer.BaseStation.UI.ViewModels"
+                    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
                     mc:Ignorable="d"
                     Title="Ideassoccer BaseStation"
@@ -14,9 +15,14 @@
                     Width="1366"
                     MaxHeight="{Binding Source={x:Static SystemParameters.MaximizedPrimaryScreenHeight}}"
                     WindowState="Maximized"
-                    Loaded="Window_Loaded"
                     d:Background="{DynamicResource SystemColorsWindow}"
                     d:Foreground="{DynamicResource SystemColorsWindowText}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ListenUdpCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Grid Margin="5 0 5 5">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"
@@ -38,13 +44,15 @@
             <GroupBox Grid.Column="1"
                       Header="{Binding Robot1.Name}">
                 <view:RobotView x:Name="robot1Control"
-                                Margin="10" />
+                                Margin="10"
+                                DataContext="{Binding Robot1VM}" />
             </GroupBox>
 
             <GroupBox Grid.Column="2"
                       Header="{Binding Robot2.Name}">
                 <view:RobotView x:Name="robot2Control"
-                                Margin="10" />
+                                Margin="10"
+                                DataContext="{Binding Robot2VM}" />
             </GroupBox>
         </Grid>
 
@@ -55,7 +63,8 @@
 
             <GroupBox Header="BaseStation Control">
                 <view:BaseStationControlView x:Name="baseStationControl"
-                                             Margin="10" />
+                                             Margin="10"
+                                             DataContext="{Binding BstaVM}" />
             </GroupBox>
         </Grid>
     </Grid>

@@ -6,8 +6,15 @@
              xmlns:local="clr-namespace:Ideassoccer.BaseStation.UI.Views"
              xmlns:converters="clr-namespace:Ideassoccer.BaseStation.UI.Converters"
              xmlns:viewmodels="clr-namespace:Ideassoccer.BaseStation.UI.ViewModels"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              d:DataContext="{d:DesignInstance Type=viewmodels:RobotViewModel}"
              mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ListenUdpCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <UserControl.Resources>
         <converters:BytesToStringConverter x:Key="BytesToStringConverter" />
         <converters:IPEndPointToAddressConverter x:Key="IPEndPointToAddressConverter" />
@@ -18,6 +25,16 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
+        <StackPanel Margin="0 0 0 10"
+                    Orientation="Horizontal">
+            <TextBlock Text="Listen port: " />
+            <TextBlock Text="{Binding UdpPort}" />
+            <Button Height="19"
+                    Margin="10 0 0 0"
+                    Command="{Binding EditUdpPortCommand}">
+                Edit
+            </Button>
+        </StackPanel>
         <StackPanel Grid.Row="1"
                     Margin="0 0 0 10">
             <TextBlock Text="IP Endpoint: " />
@@ -44,7 +61,8 @@
             </Grid.RowDefinitions>
 
             <TextBlock Text="Packet Log: " />
-            <ListView Grid.Row="1" ItemsSource="{Binding Robot.Packets}">
+            <ListView Grid.Row="1"
+                      ItemsSource="{Binding Robot.Packets}">
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
@@ -60,9 +78,7 @@
 
                 <ListView.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Name="dgCtxClear"
-                                  Header="Clear"
-                                  Click="dgCtxClear_Click"
+                        <MenuItem Header="Clear"
                                   Command="{Binding ClearPacketsCommand}" />
                     </ContextMenu>
                 </ListView.ContextMenu>
