@@ -28,7 +28,7 @@
         <StackPanel Margin="0 0 0 10"
                     Orientation="Horizontal">
             <TextBlock Text="Listen port: " />
-            <TextBlock Text="{Binding UdpPort}" />
+            <TextBlock Text="{Binding UdpEndPoint.Port}" />
             <Button Height="19"
                     Margin="10 0 0 0"
                     Command="{Binding EditUdpPortCommand}">

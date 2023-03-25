@@ -21,11 +21,10 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
             set => RaisePropertyChanged(ref _robot, value);
         }
 
-        private int _udpPort;
-        public int UdpPort
-        {
-            get => _udpPort;
-            set => RaisePropertyChanged(ref _udpPort, value);
+        private IPEndPoint _udpEndPoint;
+        public IPEndPoint UdpEndPoint {
+            get => _udpEndPoint;
+            set => RaisePropertyChanged(ref _udpEndPoint, value);
         }
 
         private Udp _udp;
@@ -33,14 +32,14 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
         public RobotViewModel(Robot robot, int udpPort)
         {
             this._robot = robot;
-            _udpPort = udpPort;
-            _udp = new Udp(new IPEndPoint(IPAddress.Any, _udpPort));
+            _udpEndPoint = new IPEndPoint(IPAddress.Any, udpPort);
+            _udp = new Udp(_udpEndPoint);
             _udp.Received += _udp_Received;
 
             this.ClearPacketsCommand = new Command(() => Robot.Packets.Clear());
             this.EditEndpointCommand = new Command(HandleEditEndpointCommand);
             this.EditUdpPortCommand = new Command(HandleEditUdpPortCommand);
-            this.ListenUdpCommand = new Command(() => { _ = _udp.Listen(); });
+            this.ListenUdpCommand = new Command(() => { _ = _udp.Listen(_udpEndPoint); });
         }
 
         private void _udp_Received(object? sender, ReceivedEventArgs e)
@@ -67,7 +66,7 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
 
         private void HandleEditUdpPortCommand()
         {
-            var inputDialog = new InputDialogWindow("Port:", UdpPort.ToString());
+            var inputDialog = new InputDialogWindow("Port:", _udpEndPoint.Port.ToString());
             if (inputDialog.ShowDialog() == true)
             {
                 int port;
@@ -90,7 +89,10 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
                     }
                 }
 
-                UdpPort = port;
+                UdpEndPoint = new IPEndPoint(_udpEndPoint.Address, port);
+                _udp.StopListening();
+
+                ListenUdpCommand.Execute(null);
             }
         }
     }
