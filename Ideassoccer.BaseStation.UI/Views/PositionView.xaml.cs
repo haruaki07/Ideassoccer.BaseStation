@@ -11,7 +11,6 @@ namespace Ideassoccer.BaseStation.UI.Views
         public PositionView()
         {
             InitializeComponent();
-            this.DataContext = new PositionViewModel();
         }
     }
 }

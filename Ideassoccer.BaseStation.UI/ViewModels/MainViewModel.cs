@@ -1,10 +1,11 @@
-﻿using Ideassoccer.BaseStation.UI.Utilities;
+﻿using Ideassoccer.BaseStation.UI.Models;
+using Ideassoccer.BaseStation.UI.Utilities;
 using System;
-using System.Net;
 using System.Collections.Generic;
-using Ideassoccer.BaseStation.UI.Models;
+using System.Globalization;
+using System.Net;
+using System.Text;
 using System.Windows.Input;
-using System.Windows;
 
 namespace Ideassoccer.BaseStation.UI.ViewModels
 {
@@ -50,6 +51,13 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
             set => RaisePropertyChanged(ref _robot2vm, value);
         }
 
+        private PositionViewModel _posvm;
+        public PositionViewModel PosVM
+        {
+            get => _posvm;
+            set => RaisePropertyChanged(ref _posvm, value);
+        }
+
         private Dictionary<string, string> _cbItems;
         public Dictionary<string, string> CbItems
         {
@@ -70,8 +78,8 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
 
             _udp = new Udp(new IPEndPoint(IPAddress.Any, UdpPort));
             _udp.Received += _udp_Received;
-            _robot1 = new Robot("1", "Robot 1", new IPEndPoint(IPAddress.Parse("192.168.8.150"), 4242));
-            _robot2 = new Robot("2", "Robot 2", new IPEndPoint(IPAddress.Parse("192.168.8.151"), 4242));
+            _robot1 = new Robot("1", "Robot 1", new IPEndPoint(IPAddress.Parse("192.168.8.150"), 4242), null);
+            _robot2 = new Robot("2", "Robot 2", new IPEndPoint(IPAddress.Parse("192.168.8.151"), 4242), null);
 
             UdpClient = new RobotUdpClient(_udp, new Robots
             {
@@ -81,6 +89,8 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
 
             _robot1vm = new RobotViewModel(_robot1, 4991);
             _robot2vm = new RobotViewModel(_robot2, 4992);
+
+            _posvm = new PositionViewModel(Robot1, Robot2);
 
             _cbItems = new Dictionary<string, string>
             {
@@ -108,15 +118,49 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
                 if (from.Equals(Robot1.IPEndPoint))
                 {
                     Robot1.Packets.Push(new Packet(DateTime.Now, PacketType.Recv, e.Bytes));
+                    if (e.Bytes[0] == 'x')
+                    {
+                        float[] pos = parsePosition(e.Bytes);
+                        Mediator.NotifyColleagues(MediatorToken.Robot1Moved, new Position(pos[0], pos[1]));
+                    }
+
                     _ = UdpClient.Send(Robot2.Id, e.Bytes);
                 }
                 // If packet is coming from robot2 then forward to robot1 
                 else if (from.Equals(Robot2.IPEndPoint))
                 {
                     Robot2.Packets.Push(new Packet(DateTime.Now, PacketType.Recv, e.Bytes));
+                    if (e.Bytes[0] == 'x')
+                    {
+                        float[] pos = parsePosition(e.Bytes);
+                        Mediator.NotifyColleagues(MediatorToken.Robot2Moved, new Position(pos[0], pos[1]));
+                    }
+
                     _ = UdpClient.Send(Robot1.Id, e.Bytes);
                 }
             }
+        }
+
+        /// <summary>
+        /// Parse position format ('x200,100')
+        /// </summary>
+        /// <param name="payload"></param>
+        /// <returns></returns>
+        float[] parsePosition(byte[] bytes)
+        {
+            float[] ret = { 0, 0 };
+
+            string payload = Encoding.UTF8.GetString(bytes)[1..].ToString();
+            string[] payloadArr = payload.Split(',');
+
+            if (payloadArr.Length == 2)
+            {
+                ret[0] = float.Parse(payloadArr[0], CultureInfo.InvariantCulture);
+                ret[1] = float.Parse(payloadArr[1], CultureInfo.InvariantCulture);
+            }
+
+
+            return ret;
         }
     }
 }

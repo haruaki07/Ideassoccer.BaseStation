@@ -1,58 +1,47 @@
 ﻿using Ideassoccer.BaseStation.UI.Utilities;
 using System.ComponentModel;
 using System.Net;
+using System.Runtime.CompilerServices;
 
 namespace Ideassoccer.BaseStation.UI.Models
 {
     public class Robot : INotifyPropertyChanged
     {
-        private string name;
-        private IPEndPoint ipEndPoint;
-        private readonly string id;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        private string _name;
         public string Name
         {
-            get
-            {
-                return name;
-            }
-            set
-            {
-                name = value;
-                NotifyPropertyChanged("Name");
-            }
-        }
-        public IPEndPoint IPEndPoint
-        {
-            get
-            {
-                return ipEndPoint;
-            }
-            set
-            {
-                ipEndPoint = value;
-                NotifyPropertyChanged("IPEndPoint");
-            }
+            get => _name;
+            set => NotifyPropertyChanged(ref _name, value);
         }
 
-        public string Id
+        private IPEndPoint _ipEndpoint;
+        public IPEndPoint IPEndPoint
         {
-            get
-            {
-                return id;
-            }
+            get => _ipEndpoint;
+            set => NotifyPropertyChanged(ref _ipEndpoint, value);
         }
+
+        private readonly string _id;
+        public string Id { get => _id; }
 
         public ObservableStack<Packet> Packets { get; set; }
 
-        public Robot(string id, string name, IPEndPoint endpoint)
+        private Position? _pos;
+        public Position? Pos {
+            get => _pos;
+            set => NotifyPropertyChanged(ref _pos, value);
+        }
+
+        public Robot(string id, string name, IPEndPoint endpoint, Position? pos)
         {
-            this.id = id;
-            this.name = name;
-            ipEndPoint = endpoint;
+            this._id = id;
+            this._name = name;
+            _ipEndpoint = endpoint;
             Packets = new ObservableStack<Packet>();
+            _pos = pos;
         }
 
         public string GetIPAddress()
@@ -60,9 +49,42 @@ namespace Ideassoccer.BaseStation.UI.Models
             return IPEndPoint.Address.ToString();
         }
 
-        private void NotifyPropertyChanged(string propName)
+        protected void NotifyPropertyChanged<T>(ref T property, T newValue, [CallerMemberName] string propertyName = "")
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+            property = newValue;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    public class Position : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private float? _x;
+        public float? X
+        {
+            get => _x;
+            set => NotifyPropertyChanged(ref _x, value);
+        }
+
+        private float? _y;
+        public float? Y
+        {
+            get => _y;
+            set => NotifyPropertyChanged(ref _y, value);
+        }
+
+        public Position() { }
+        public Position(float x, float y)
+        {
+            _x = x;
+            _y = y;
+        }
+
+        protected void NotifyPropertyChanged<T>(ref T property, T newValue, [CallerMemberName] string propertyName = "")
+        {
+            property = newValue;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

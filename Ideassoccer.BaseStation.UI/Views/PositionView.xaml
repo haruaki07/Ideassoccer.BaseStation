@@ -4,9 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Ideassoccer.BaseStation.UI.Views"
+             xmlns:converters="clr-namespace:Ideassoccer.BaseStation.UI.Converters"
              xmlns:viewmodels="clr-namespace:Ideassoccer.BaseStation.UI.ViewModels"
              d:DataContext="{d:DesignInstance Type=viewmodels:PositionViewModel}"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:NullableToVisibilityConverter x:Key="NullableToVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
         <Canvas Name="canvasRoot"
                 Background="{Binding CanvasBackground}"
@@ -19,7 +23,34 @@
                     Canvas.Top="17"
                     Canvas.Left="35"
                     Width="441"
-                    Height="28">
+                    Height="294">
+                <Border Width="20"
+                        Height="20"
+                        Background="Magenta"
+                        CornerRadius="10"
+                        BorderBrush="Black"
+                        BorderThickness="2"
+                        Visibility="{Binding Robot1.Pos, Converter={StaticResource NullableToVisibilityConverter}}"
+                        Canvas.Top="{Binding Robot1.Pos.Y}"
+                        Canvas.Left="{Binding Robot1.Pos.X}">
+                    <TextBlock Foreground="Black"
+                               HorizontalAlignment="Center"
+                               Text="{Binding Robot1.Id}">1</TextBlock>
+                </Border>
+
+                <Border Width="20"
+                        Height="20"
+                        Background="Cyan"
+                        CornerRadius="10"
+                        BorderBrush="Black"
+                        BorderThickness="2"
+                        Visibility="{Binding Robot2.Pos, Converter={StaticResource NullableToVisibilityConverter}}"
+                        Canvas.Top="{Binding Robot2.Pos.Y}"
+                        Canvas.Left="{Binding Robot2.Pos.X}">
+                    <TextBlock Foreground="Black"
+                               HorizontalAlignment="Center"
+                               Text="{Binding Robot2.Id}">2</TextBlock>
+                </Border>
             </Canvas>
         </Canvas>
     </Grid>

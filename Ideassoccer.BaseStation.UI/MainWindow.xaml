@@ -38,7 +38,7 @@
             </Grid.ColumnDefinitions>
 
             <GroupBox Header="Position">
-                <view:PositionView Margin="25 0" />
+                <view:PositionView Margin="25 0" DataContext="{Binding PosVM}" />
             </GroupBox>
 
             <GroupBox Grid.Column="1"
