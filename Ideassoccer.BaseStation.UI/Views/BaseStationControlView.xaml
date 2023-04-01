@@ -70,9 +70,13 @@
                 <Button Command="{Binding BroadcastMessageCommand}"
                         CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.Ping}}">Ping</Button>
                 <Button Command="{Binding BroadcastMessageCommand}"
-                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.KickOff}}">Kick-Off</Button>
+                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.RKickOff}}">Kick-Off kanan</Button>
                 <Button Command="{Binding BroadcastMessageCommand}"
-                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.CornerKick}}">Corner Kick</Button>
+                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.LKickOff}}">Kick-Off kiri</Button>
+                <Button Command="{Binding BroadcastMessageCommand}"
+                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.RCornerKick}}">Corner kick kanan</Button>
+                <Button Command="{Binding BroadcastMessageCommand}"
+                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.LCornerKick}}">Corner kick kiri</Button>
                 <Button Command="{Binding BroadcastMessageCommand}"
                         CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.DropBall}}">Drop Ball</Button>
             </UniformGrid>

@@ -60,8 +60,10 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
         public static string Start = "s";
         public static string Stop = "S";
         public static string Ping = "ping";
-        public static string KickOff = "k";
-        public static string CornerKick = "c";
+        public static string RKickOff = "k";
+        public static string LKickOff = "K";
+        public static string RCornerKick = "c";
+        public static string LCornerKick = "C";
         public static string DropBall = "N";
     }
 }
