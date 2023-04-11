@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  release: 
+    types: [published]	
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    env:
+      Actions_Allow_Unsecure_Commands: true # Allows AddPAth and SetEnv commands
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    # Install the .NET Core workload
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
+      
+    # Restore the application
+    - name:  Restore dependencies
+      run: dotnet restore
+
+    # Build the Windows Application Packaging project
+    - name: Publish
+      run: dotnet publish -r $env:Runtime /p:Configuration=$env:Configuration /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true /p:SelfContained=true /p:DebugType=None /p:DebugSymbols=false
+      env:
+        Runtime: win-x64
+        Configuration: Release
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: Ideassoccer.BaseStation.UI.exe
+        path: Ideassoccer.BaseStation.UI\bin\Release\net6.0-windows\win-x64\publish
