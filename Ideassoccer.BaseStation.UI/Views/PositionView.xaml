@@ -24,15 +24,21 @@
                     Canvas.Left="35"
                     Width="441"
                     Height="294">
+
                 <Border Width="20"
                         Height="20"
                         Background="Magenta"
-                        CornerRadius="10"
+                        CornerRadius="10 0 0 10"
                         BorderBrush="Black"
                         BorderThickness="2"
                         Visibility="{Binding Robot1.Pos, Converter={StaticResource NullableToVisibilityConverter}}"
-                        Canvas.Top="{Binding Robot1.Pos.Y}"
-                        Canvas.Left="{Binding Robot1.Pos.X}">
+                        Canvas.Top="{Binding Robot1.Pos.X}"
+                        Canvas.Left="{Binding Robot1.Pos.Y}">
+                    <Border.RenderTransform>
+                        <RotateTransform Angle="{Binding Robot1.Pos.Z}"
+                                         CenterX="10"
+                                         CenterY="10" />
+                    </Border.RenderTransform>
                     <TextBlock Foreground="Black"
                                HorizontalAlignment="Center"
                                Text="{Binding Robot1.Id}">1</TextBlock>
@@ -41,15 +47,22 @@
                 <Border Width="20"
                         Height="20"
                         Background="Cyan"
-                        CornerRadius="10"
+                        CornerRadius="10 0 0 10"
                         BorderBrush="Black"
                         BorderThickness="2"
                         Visibility="{Binding Robot2.Pos, Converter={StaticResource NullableToVisibilityConverter}}"
-                        Canvas.Top="{Binding Robot2.Pos.Y}"
-                        Canvas.Left="{Binding Robot2.Pos.X}">
+                        Canvas.Top="{Binding Robot2.Pos.X}"
+                        Canvas.Left="{Binding Robot2.Pos.Y}">
+                    <Border.RenderTransform>
+                        <RotateTransform Angle="{Binding Robot2.Pos.Z}"
+                                         CenterX="10"
+                                         CenterY="10" />
+                    </Border.RenderTransform>
                     <TextBlock Foreground="Black"
                                HorizontalAlignment="Center"
-                               Text="{Binding Robot2.Id}">2</TextBlock>
+                               Text="{Binding Robot2.Id}">
+                        2
+                    </TextBlock>
                 </Border>
             </Canvas>
         </Canvas>

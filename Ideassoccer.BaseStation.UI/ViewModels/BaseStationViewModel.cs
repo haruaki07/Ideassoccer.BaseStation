@@ -45,12 +45,14 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
 
         private void HandleSendMessageCommand(string msg)
         {
+            //_ = _udpClient.Send(_cbItems.ElementAt(SelectedDest).Key, "b", msg);
             _ = _udpClient.Send(_cbItems.ElementAt(SelectedDest).Key, msg);
         }
 
         private void HandleBroadcastMessageCommand(string msg)
         {
             // 0 means all robot
+            //_ = _udpClient.Send("0", "b", msg);
             _ = _udpClient.Send("0", msg);
         }
     }

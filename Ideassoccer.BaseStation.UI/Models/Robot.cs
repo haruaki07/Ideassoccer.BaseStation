@@ -74,11 +74,19 @@ namespace Ideassoccer.BaseStation.UI.Models
             set => NotifyPropertyChanged(ref _y, value);
         }
 
+        private float? _z;
+        public float? Z
+        {
+            get => _z;
+            set => NotifyPropertyChanged(ref _z, value);
+        }
+
         public Position() { }
-        public Position(float x, float y)
+        public Position(float x, float y, float z)
         {
             _x = x;
             _y = y;
+            _z = z;
         }
 
         protected void NotifyPropertyChanged<T>(ref T property, T newValue, [CallerMemberName] string propertyName = "")
