@@ -2,10 +2,9 @@
 using Ideassoccer.BaseStation.UI.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Net;
-using System.Text;
+using System.Net.NetworkInformation;
 using System.Windows;
 using System.Windows.Input;
 
@@ -13,7 +12,10 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
+        #region propdef
         public ICommand ListenUdpCommand { get; set; }
+        public ICommand GetWiFiIPCommand { get; set; }
+        public ICommand CopyWiFiIPCommand { get; set; }
 
         private Udp _udp;
         public RobotUdpClient UdpClient;
@@ -74,9 +76,15 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
             set => RaisePropertyChanged(ref _bstavm, value);
         }
 
+        private string? _hostIP;
+        public string? HostIP { get => _hostIP; set => RaisePropertyChanged(ref _hostIP, value); }
+        #endregion
+
+        #region ctor
         public MainViewModel()
         {
             Mediator.Register(MediatorToken.UDPReceived, OnUdpReceived);
+            Mediator.Register(MediatorToken.NetworkInterfaceChanged, OnNetChanged);
 
             _udp = new Udp(new IPEndPoint(IPAddress.Any, UdpPort));
             _udp.Received += _udp_Received;
@@ -103,7 +111,18 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
             _bstavm = new BaseStationViewModel(UdpClient, CbItems);
 
             ListenUdpCommand = new Command(() => { _ = _udp.Listen(); });
+            GetWiFiIPCommand = new Command(() =>
+            {
+                HostIP = Networking.GetWiFiIP();
+                NetworkChange.NetworkAddressChanged += (s, e) =>
+                    Mediator.NotifyColleagues(MediatorToken.NetworkInterfaceChanged, e);
+            });
+            CopyWiFiIPCommand = new Command(() =>
+            {
+                if (HostIP != null) Clipboard.SetText(HostIP);
+            });
         }
+        #endregion
 
         private void _udp_Received(object? sender, ReceivedEventArgs e)
         {
@@ -171,6 +190,11 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
                 // forward message
                 _ = UdpClient.Send(receiver.Id, e.Bytes);
             }
+        }
+
+        private void OnNetChanged(object evt)
+        {
+            HostIP = Networking.GetWiFiIP();
         }
 
         //struct RecvMessage

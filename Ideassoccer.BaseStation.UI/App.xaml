@@ -5,9 +5,11 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <!--theme-->
             <ResourceDictionary.MergedDictionaries>
+                <!--theme-->
                 <ResourceDictionary Source="/AakStudio.Shell.UI;component/Themes/VisualStudio2019/DarkTheme.xaml" />
+                <!--icons-->
+                <ResourceDictionary Source="pack://application:,,,/Ideassoccer.BaseStation.UI;component/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <!--application styles-->
@@ -50,6 +52,44 @@
                         Value="16" />
                 <Setter Property="Height"
                         Value="16" />
+            </Style>
+
+            <Style x:Key="btnStyleStatusBar"
+                   TargetType="Button">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource SystemColorsWindowText}" />
+                <Setter Property="Background"
+                        Value="Transparent" />
+                <Setter Property="Margin"
+                        Value="0" />
+                <Setter Property="BorderThickness"
+                        Value="0" />
+                <Setter Property="Width"
+                        Value="Auto" />
+                <Setter Property="Height"
+                        Value="Auto" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  Margin="4 2 4 2" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver"
+                             Value="True">
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <SolidColorBrush Color="White"
+                                                 Opacity="0.2" />
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
         </ResourceDictionary>
     </Application.Resources>
