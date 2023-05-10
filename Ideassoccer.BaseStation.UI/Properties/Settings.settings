@@ -1,0 +1,36 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Ideassoccer.BaseStation.UI.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Robot1UdpPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4991</Value>
+    </Setting>
+    <Setting Name="Robot1Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Robot 1</Value>
+    </Setting>
+    <Setting Name="Robot1Id" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="Robot1EndpointAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.0.100</Value>
+    </Setting>
+    <Setting Name="Robot1EndpointPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4242</Value>
+    </Setting>
+    <Setting Name="Robot2Id" Type="System.String" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="Robot2Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Robot 2</Value>
+    </Setting>
+    <Setting Name="Robot2UdpPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4992</Value>
+    </Setting>
+    <Setting Name="Robot2EndpointAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.0.103</Value>
+    </Setting>
+    <Setting Name="Robot2EndpointPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4242</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

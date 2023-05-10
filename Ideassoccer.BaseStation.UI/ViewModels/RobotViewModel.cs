@@ -62,6 +62,22 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
                 }
 
                 Robot.IPEndPoint = ep;
+                try
+                {
+                    if (Robot.Id == "1")
+                    {
+                        Properties.Settings.Default.Robot1EndpointAddress = ep.Address.ToString();
+                        Properties.Settings.Default.Robot1EndpointPort = ep.Port;
+                    }
+                    else if (Robot.Id == "2")
+                    {
+                        Properties.Settings.Default.Robot2EndpointAddress = ep.Address.ToString();
+                        Properties.Settings.Default.Robot2EndpointPort = ep.Port;
+                    }
+
+                    Properties.Settings.Default.Save();
+                }
+                catch { }
             }
         }
 
@@ -94,6 +110,15 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
                 _udp.StopListening();
 
                 ListenUdpCommand.Execute(null);
+
+                try
+                {
+                    if (Robot.Id == "1") Properties.Settings.Default.Robot1UdpPort = port;
+                    else if (Robot.Id == "2") Properties.Settings.Default.Robot2UdpPort = port;
+
+                    Properties.Settings.Default.Save();
+                }
+                catch { }
             }
         }
     }

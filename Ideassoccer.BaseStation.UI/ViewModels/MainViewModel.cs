@@ -2,6 +2,7 @@
 using Ideassoccer.BaseStation.UI.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -88,8 +89,24 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
 
             _udp = new Udp(new IPEndPoint(IPAddress.Any, UdpPort));
             _udp.Received += _udp_Received;
-            _robot1 = new Robot("1", "Robot 1", new IPEndPoint(IPAddress.Parse("192.168.0.100"), 4242), null);
-            _robot2 = new Robot("2", "Robot 2", new IPEndPoint(IPAddress.Parse("192.168.0.103"), 4242), null);
+            _robot1 = new Robot(
+                Properties.Settings.Default.Robot1Id,
+                Properties.Settings.Default.Robot1Name,
+                new IPEndPoint(
+                    IPAddress.Parse(Properties.Settings.Default.Robot1EndpointAddress),
+                    Properties.Settings.Default.Robot1EndpointPort
+                ),
+                null
+            );
+            _robot2 = new Robot(
+                Properties.Settings.Default.Robot2Id,
+                Properties.Settings.Default.Robot2Name,
+                new IPEndPoint(
+                    IPAddress.Parse(Properties.Settings.Default.Robot2EndpointAddress),
+                    Properties.Settings.Default.Robot2EndpointPort
+                ),
+                null
+            );
 
             UdpClient = new RobotUdpClient(_udp, new Robots
             {
@@ -97,8 +114,8 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
                 { Robot2.Id, Robot2 },
             });
 
-            _robot1vm = new RobotViewModel(_robot1, 4991);
-            _robot2vm = new RobotViewModel(_robot2, 4992);
+            _robot1vm = new RobotViewModel(_robot1, Properties.Settings.Default.Robot1UdpPort);
+            _robot2vm = new RobotViewModel(_robot2, Properties.Settings.Default.Robot2UdpPort);
 
             _posvm = new PositionViewModel(Robot1, Robot2);
 
