@@ -184,6 +184,7 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
                             else pos[posIdx] += (char)bytes[i];
                         }
 
+                        // based on field image size (222px x 294px) and real size (400cm x 600cm)
                         float xFactor = 294 / (float)600;
                         float yFactor = 222 / (float)400;
 

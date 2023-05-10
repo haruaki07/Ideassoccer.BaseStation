@@ -73,16 +73,30 @@
 
         <StatusBar Grid.Row="2"
                    Margin="-5">
-            <StatusBarItem>
-                <Button Style="{StaticResource btnStyleStatusBar}"
-                        ToolTip="Click to copy"
-                        ToolTipService.InitialShowDelay="0"
-                        Command="{Binding CopyWiFiIPCommand}">
-                    <WrapPanel>
-                        <ContentControl Content="{StaticResource iconNetwork}" Margin="0 0 5 0"/>
-                        <TextBlock Text="{Binding HostIP}" />
-                    </WrapPanel>
-                </Button>
+            <StatusBarItem HorizontalAlignment="Right" Padding="0">
+                <StackPanel Orientation="Horizontal">
+                    <StatusBarItem>
+                        <Button Style="{StaticResource btnStyleStatusBar}"
+                                ToolTip="Click to copy"
+                                ToolTipService.InitialShowDelay="0"
+                                Command="{Binding CopyWiFiIPCommand}"
+                                MinWidth="100">
+                            <WrapPanel MinWidth="100">
+                                <ContentControl Content="{StaticResource iconNetwork}"
+                                                Margin="3 0 5 0" />
+                                <TextBlock Text="{Binding HostIP}" />
+                            </WrapPanel>
+                        </Button>
+                    </StatusBarItem>
+
+                    <StatusBarItem>
+                        <Button Style="{StaticResource btnStyleStatusBar}"
+                                ToolTip="Notifications"
+                                ToolTipService.InitialShowDelay="0">
+                            <ContentControl Content="{StaticResource iconNotification}" />
+                        </Button>
+                    </StatusBarItem>
+                </StackPanel>
             </StatusBarItem>
         </StatusBar>
     </Grid>
