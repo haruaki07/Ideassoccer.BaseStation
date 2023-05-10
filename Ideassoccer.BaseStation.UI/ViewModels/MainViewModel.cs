@@ -88,7 +88,7 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
 
             _udp = new Udp(new IPEndPoint(IPAddress.Any, UdpPort));
             _udp.Received += _udp_Received;
-            _robot1 = new Robot("1", "Robot 1", new IPEndPoint(IPAddress.Parse("192.168.0.100"), 4221), null);
+            _robot1 = new Robot("1", "Robot 1", new IPEndPoint(IPAddress.Parse("192.168.0.100"), 4242), null);
             _robot2 = new Robot("2", "Robot 2", new IPEndPoint(IPAddress.Parse("192.168.0.103"), 4242), null);
 
             UdpClient = new RobotUdpClient(_udp, new Robots
