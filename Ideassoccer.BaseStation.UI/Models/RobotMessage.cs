@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ideassoccer.BaseStation.UI.Models
+﻿namespace Ideassoccer.BaseStation.UI.Models
 {
     public class RobotMessage
     {
@@ -14,7 +8,8 @@ namespace Ideassoccer.BaseStation.UI.Models
         public float Y { get; set; }
         public float Z { get; set; }
 
-        public RobotMessage(string command, int kes, float x, float y,float z) {
+        public RobotMessage(string command, int kes, float x, float y, float z)
+        {
             Command = command;
             Kes = kes;
             X = x;

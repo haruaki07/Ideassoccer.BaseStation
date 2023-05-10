@@ -30,7 +30,8 @@ namespace Ideassoccer.BaseStation.UI.Models
         public ObservableStack<Packet> Packets { get; set; }
 
         private Position? _pos;
-        public Position? Pos {
+        public Position? Pos
+        {
             get => _pos;
             set => NotifyPropertyChanged(ref _pos, value);
         }

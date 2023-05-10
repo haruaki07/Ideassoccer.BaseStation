@@ -22,7 +22,8 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
         }
 
         private IPEndPoint _udpEndPoint;
-        public IPEndPoint UdpEndPoint {
+        public IPEndPoint UdpEndPoint
+        {
             get => _udpEndPoint;
             set => RaisePropertyChanged(ref _udpEndPoint, value);
         }

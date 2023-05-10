@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Net.NetworkInformation;
+﻿using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
 namespace Ideassoccer.BaseStation.UI.Utilities

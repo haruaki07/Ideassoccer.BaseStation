@@ -1,7 +1,6 @@
 ﻿using Ideassoccer.BaseStation.UI.Models;
 using Ideassoccer.BaseStation.UI.Utilities;
 using System;
-using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 

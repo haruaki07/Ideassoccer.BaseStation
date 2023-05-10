@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace Ideassoccer.BaseStation.UI.Utilities
 {
-    public class Command: ICommand
+    public class Command : ICommand
     {
         private readonly Action _action;
 
