@@ -30,7 +30,15 @@ jobs:
 
     # Build the Windows Application Packaging project
     - name: Publish
-      run: dotnet publish -r $env:Runtime /p:Configuration=$env:Configuration /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true /p:SelfContained=true /p:DebugType=None /p:DebugSymbols=false
+      run: >
+        dotnet publish
+          -r $env:Runtime
+          /p:Configuration=$env:Configuration
+          /p:PublishSingleFile=true 
+          /p:IncludeNativeLibrariesForSelfExtract=true 
+          /p:SelfContained=true 
+          /p:DebugType=None 
+          /p:DebugSymbols=false
       env:
         Runtime: win-x64
         Configuration: Release
@@ -38,5 +46,5 @@ jobs:
     - name: Upload build artifacts
       uses: actions/upload-artifact@v1
       with:
-        name: Ideassoccer.BaseStation.UI.exe
+        name: Ideassoccer.BaseStation.UI
         path: Ideassoccer.BaseStation.UI\bin\Release\net6.0-windows\win-x64\publish
