@@ -17,6 +17,7 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
         public ICommand ListenUdpCommand { get; set; }
         public ICommand GetWiFiIPCommand { get; set; }
         public ICommand CopyWiFiIPCommand { get; set; }
+        public ICommand OpenLogsCommand { get; set; }
 
         private Udp _udp;
         public RobotUdpClient UdpClient;
@@ -79,6 +80,13 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
 
         private string? _hostIP;
         public string? HostIP { get => _hostIP; set => RaisePropertyChanged(ref _hostIP, value); }
+
+        private bool _showLogs;
+        public bool ShowLogs
+        {
+            get => _showLogs;
+            set => RaisePropertyChanged(ref _showLogs, value);
+        }
         #endregion
 
         #region ctor
@@ -86,6 +94,10 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
         {
             Mediator.Register(MediatorToken.UDPReceived, OnUdpReceived);
             Mediator.Register(MediatorToken.NetworkInterfaceChanged, OnNetChanged);
+            Mediator.Register(MediatorToken.LogClose, (object e) => ShowLogs = false);
+
+            _showLogs = false;
+            OpenLogsCommand = new Command(() => ShowLogs = true);
 
             _udp = new Udp(new IPEndPoint(IPAddress.Any, UdpPort));
             _udp.Received += _udp_Received;
@@ -199,7 +211,7 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
                 }
                 catch (Exception er)
                 {
-                    MessageBox.Show(er.Message);
+                    Logs.Push(er.ToString());
                     return;
                 }
 

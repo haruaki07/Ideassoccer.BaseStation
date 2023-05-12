@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="Ideassoccer.BaseStation.UI.Views.LogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Ideassoccer.BaseStation.UI.Views"
+             xmlns:viewmodels="clr-namespace:Ideassoccer.BaseStation.UI.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:LogViewModel}"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style TargetType="Button"
+               x:Key="btnHeader">
+            <Setter Property="Foreground"
+                    Value="{DynamicResource SystemColorsWindowText}" />
+            <Setter Property="Background"
+                    Value="Transparent" />
+            <Setter Property="Padding"
+                    Value="0" />
+            <Setter Property="BorderThickness"
+                    Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Margin="0" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver"
+                         Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="White"
+                                             Opacity="0.2" />
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <StackPanel Orientation="Horizontal"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Right"
+                    Background="Transparent"
+                    Margin="0 0 10 0"
+                    Panel.ZIndex="2">
+            <Button Content="Clear"
+                    Style="{StaticResource btnHeader}"
+                    Margin="0 0 5 0"
+                    Padding="3 0 3 0"
+                    Command="{Binding ClearLogsCommand}" />
+            <Button Content="✕"
+                    Style="{StaticResource btnHeader}"
+                    Padding="3 0 3 0"
+                    Command="{Binding CloseLogsCommand}" />
+        </StackPanel>
+        <GroupBox Header="Log"
+                  Panel.ZIndex="1"
+                  Padding="0 0 0 5">
+            <FlowDocumentScrollViewer VerticalScrollBarVisibility="Auto"
+                                      HorizontalScrollBarVisibility="Auto"
+                                      Height="100"
+                                      x:Name="logScrollViewer">
+                <FlowDocument IsOptimalParagraphEnabled="True"
+                              FontSize="12"
+                              FontFamily="Consolas"
+                              Background="{StaticResource CommonControlsTextBoxBackground}"
+                              Foreground="White"
+                              PagePadding="8">
+                    <Paragraph Margin="0"
+                               xml:space="preserve"><Run Text="{Binding Logs}" /></Paragraph>
+                </FlowDocument>
+            </FlowDocumentScrollViewer>
+        </GroupBox>
+    </Grid>
+</UserControl>

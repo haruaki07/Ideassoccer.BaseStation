@@ -24,6 +24,10 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
+    <CustomChromeWindow.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </CustomChromeWindow.Resources>
+
     <Grid Margin="5 0 5 5">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"
@@ -71,33 +75,41 @@
             </GroupBox>
         </Grid>
 
-        <StatusBar Grid.Row="2"
-                   Margin="-5">
-            <StatusBarItem HorizontalAlignment="Right" Padding="0">
-                <StackPanel Orientation="Horizontal">
-                    <StatusBarItem>
-                        <Button Style="{StaticResource btnStyleStatusBar}"
-                                ToolTip="Click to copy"
-                                ToolTipService.InitialShowDelay="0"
-                                Command="{Binding CopyWiFiIPCommand}"
-                                MinWidth="100">
-                            <WrapPanel MinWidth="100">
-                                <ContentControl Content="{StaticResource iconNetwork}"
-                                                Margin="3 0 5 0" />
-                                <TextBlock Text="{Binding HostIP}" />
-                            </WrapPanel>
-                        </Button>
-                    </StatusBarItem>
+        <StackPanel Grid.Row="2"
+                    Orientation="Vertical">
+            <Grid Visibility="{Binding ShowLogs, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <view:LogView />
+            </Grid>
 
-                    <StatusBarItem>
-                        <Button Style="{StaticResource btnStyleStatusBar}"
-                                ToolTip="Notifications"
-                                ToolTipService.InitialShowDelay="0">
-                            <ContentControl Content="{StaticResource iconNotification}" />
-                        </Button>
-                    </StatusBarItem>
-                </StackPanel>
-            </StatusBarItem>
-        </StatusBar>
+            <StatusBar Margin="-5">
+                <StatusBarItem HorizontalAlignment="Right"
+                               Padding="0">
+                    <StackPanel Orientation="Horizontal">
+                        <StatusBarItem>
+                            <Button Style="{StaticResource btnStyleStatusBar}"
+                                    ToolTip="Click to copy"
+                                    ToolTipService.InitialShowDelay="0"
+                                    Command="{Binding CopyWiFiIPCommand}"
+                                    MinWidth="100">
+                                <WrapPanel MinWidth="100">
+                                    <ContentControl Content="{StaticResource iconNetwork}"
+                                                    Margin="3 0 5 0" />
+                                    <TextBlock Text="{Binding HostIP}" />
+                                </WrapPanel>
+                            </Button>
+                        </StatusBarItem>
+
+                        <StatusBarItem>
+                            <Button Style="{StaticResource btnStyleStatusBar}"
+                                    ToolTip="Logs"
+                                    ToolTipService.InitialShowDelay="0"
+                                    Command="{Binding OpenLogsCommand}">
+                                <ContentControl Content="{StaticResource iconLog}" />
+                            </Button>
+                        </StatusBarItem>
+                    </StackPanel>
+                </StatusBarItem>
+            </StatusBar>
+        </StackPanel>
     </Grid>
 </CustomChromeWindow>

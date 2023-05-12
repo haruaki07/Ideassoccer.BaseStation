@@ -47,6 +47,7 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
         {
             //_ = _udpClient.Send(_cbItems.ElementAt(SelectedDest).Key, "b", msg);
             _ = _udpClient.Send(_cbItems.ElementAt(SelectedDest).Key, msg);
+            Logs.Push("Haiyyaaaa");
         }
 
         private void HandleBroadcastMessageCommand(string msg)
