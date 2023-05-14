@@ -32,13 +32,13 @@ jobs:
     - name: Publish
       run: >
         dotnet publish
-          -r $env:Runtime
-          /p:Configuration=$env:Configuration
-          /p:PublishSingleFile=true 
-          /p:IncludeNativeLibrariesForSelfExtract=true 
-          /p:SelfContained=true 
-          /p:DebugType=None 
-          /p:DebugSymbols=false
+        -r $env:Runtime
+        /p:Configuration=$env:Configuration
+        /p:PublishSingleFile=true 
+        /p:IncludeNativeLibrariesForSelfExtract=true 
+        /p:SelfContained=true 
+        /p:DebugType=None 
+        /p:DebugSymbols=false
       env:
         Runtime: win-x64
         Configuration: Release
