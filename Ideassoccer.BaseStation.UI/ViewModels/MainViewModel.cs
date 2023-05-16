@@ -1,4 +1,5 @@
-﻿using Ideassoccer.BaseStation.UI.Models;
+﻿using Ideassoccer.BaseStation.UI.Enums;
+using Ideassoccer.BaseStation.UI.Models;
 using Ideassoccer.BaseStation.UI.Utilities;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Configuration;
 using System.Globalization;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
@@ -87,6 +89,27 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
             get => _showLogs;
             set => RaisePropertyChanged(ref _showLogs, value);
         }
+
+        private string _mintaBola;
+        public string MintaBola
+        {
+            get => _mintaBola;
+            set => RaisePropertyChanged(ref _mintaBola, value);
+        }
+
+        private State _state;
+        public State State
+        {
+            get => _state;
+            set => RaisePropertyChanged(ref _state, value);
+        }
+
+        private PlayMode _playMode;
+        public PlayMode PlayMode
+        {
+            get => _playMode;
+            set => RaisePropertyChanged(ref _playMode, value);
+        }
         #endregion
 
         #region ctor
@@ -98,6 +121,10 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
 
             _showLogs = false;
             OpenLogsCommand = new Command(() => ShowLogs = true);
+
+            _mintaBola = "0";
+            _state = State.Stop;
+            _playMode = PlayMode.RKickOff;
 
             _udp = new Udp(new IPEndPoint(IPAddress.Any, UdpPort));
             _udp.Received += _udp_Received;
@@ -137,7 +164,14 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
                 {_robot1.Id, _robot1.Name },
                 {_robot2.Id, _robot2.Name },
             };
-            _bstavm = new BaseStationViewModel(UdpClient, CbItems);
+            _bstavm = new BaseStationViewModel(
+                UdpClient,
+                CbItems,
+                _state,
+                new Action<State>((newState) => State = newState),
+                _playMode,
+                new Action<PlayMode>((newMode) => PlayMode = newMode)
+            );
 
             ListenUdpCommand = new Command(() => { _ = _udp.Listen(); });
             GetWiFiIPCommand = new Command(() =>
@@ -178,6 +212,7 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
                 }
                 else return;
 
+
                 // handle robot position message
                 try
                 {
@@ -208,17 +243,19 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
                         );
                         return;
                     }
+
+                    byte[] msg = { e.Bytes[0], (byte)',', (byte)State.Value[0], (byte)';', (byte)PlayMode.Value[0] };
+
+                    sender.Packets.Push(new Packet(DateTime.Now, PacketType.Recv, e.Bytes));
+
+                    // forward message
+                    _ = UdpClient.Send(receiver.Id, msg);
                 }
                 catch (Exception er)
                 {
                     Logs.Push(er.ToString());
                     return;
                 }
-
-                sender.Packets.Push(new Packet(DateTime.Now, PacketType.Recv, e.Bytes));
-
-                // forward message
-                _ = UdpClient.Send(receiver.Id, e.Bytes);
             }
         }
 

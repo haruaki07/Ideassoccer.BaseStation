@@ -4,16 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Ideassoccer.BaseStation.UI.Views"
-             xmlns:viewmodel="clr-namespace:Ideassoccer.BaseStation.UI.ViewModels"
-             d:DataContext="{d:DesignInstance Type=viewmodel:BaseStationViewModel}"
+             xmlns:vm="clr-namespace:Ideassoccer.BaseStation.UI.ViewModels"
+             xmlns:converter="clr-namespace:Ideassoccer.BaseStation.UI.Converters"
+             d:DataContext="{d:DesignInstance Type=vm:BaseStationViewModel}"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <converter:StateToInverseBooleanConverter x:Key="StateToInverseBooleanConverter" />
+    </UserControl.Resources>
     <!--TODO: fix, this can only work if user control is focused-->
     <!--<UserControl.InputBindings>
-        <KeyBinding Command="{Binding BroadcastMessageCommand}"
-                    CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.Start}}"
+        <KeyBinding Command="{Binding BroadcastStateCommand}"
+                    CommandParameter="{Binding Source={x:Static vm:MessagePayload.Start}}"
                     Key="F5" />
-        <KeyBinding Command="{Binding BroadcastMessageCommand}"
-                    CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.Stop}}"
+        <KeyBinding Command="{Binding BroadcastStateCommand}"
+                    CommandParameter="{Binding Source={x:Static vm:MessagePayload.Stop}}"
                     Key="F5"
                     Modifiers="Shift" />
     </UserControl.InputBindings>-->
@@ -51,34 +55,38 @@
                     </Style>
                 </UniformGrid.Resources>
 
-                <Button Command="{Binding BroadcastMessageCommand}"
-                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.Start}}">
+                <Button Command="{Binding BroadcastStateCommand}"
+                        CommandParameter="{Binding Source={x:Static vm:MessagePayload.Start}}">
                     <WrapPanel>
                         <Image Source="{Binding Icon.Start}"
-                               Style="{StaticResource imgStyleIconBase}" Margin="0 0 3 0" />
+                               Style="{StaticResource imgStyleIconBase}"
+                               Margin="0 0 3 0" />
                         <TextBlock>Start</TextBlock>
                     </WrapPanel>
                 </Button>
-                <Button Command="{Binding BroadcastMessageCommand}"
-                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.Stop}}">
+                <Button Command="{Binding BroadcastStateCommand}"
+                        CommandParameter="{Binding Source={x:Static vm:MessagePayload.Stop}}">
                     <WrapPanel>
                         <Image Source="{Binding Icon.Stop}"
-                               Style="{StaticResource imgStyleIconBase}" Margin="0 0 3 0" />
+                               Style="{StaticResource imgStyleIconBase}"
+                               Margin="0 0 3 0" />
                         <TextBlock>Stop</TextBlock>
                     </WrapPanel>
                 </Button>
-                <Button Command="{Binding BroadcastMessageCommand}"
-                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.Ping}}">Ping</Button>
-                <Button Command="{Binding BroadcastMessageCommand}"
-                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.RKickOff}}">Kick-Off kanan</Button>
-                <Button Command="{Binding BroadcastMessageCommand}"
-                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.LKickOff}}">Kick-Off kiri</Button>
-                <Button Command="{Binding BroadcastMessageCommand}"
-                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.RCornerKick}}">Corner kick kanan</Button>
-                <Button Command="{Binding BroadcastMessageCommand}"
-                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.LCornerKick}}">Corner kick kiri</Button>
-                <Button Command="{Binding BroadcastMessageCommand}"
-                        CommandParameter="{Binding Source={x:Static viewmodel:MessagePayload.DropBall}}">Drop Ball</Button>
+                <Button Command="{Binding BroadcastStateCommand}"
+                        CommandParameter="{Binding Source={x:Static vm:MessagePayload.Retry}}">Retry</Button>
+                <Button Command="{Binding BroadcastPlayModeCommand}"
+                        CommandParameter="{Binding Source={x:Static vm:MessagePayload.RKickOff}}">Right Kick-off</Button>
+                <Button Command="{Binding BroadcastPlayModeCommand}"
+                        CommandParameter="{Binding Source={x:Static vm:MessagePayload.LKickOff}}">Left Kick-off</Button>
+                <Button Command="{Binding BroadcastPlayModeCommand}"
+                        CommandParameter="{Binding Source={x:Static vm:MessagePayload.RCornerKick}}">Right Corner Kick</Button>
+                <Button Command="{Binding BroadcastPlayModeCommand}"
+                        CommandParameter="{Binding Source={x:Static vm:MessagePayload.LCornerKick}}">Left Corner Kick</Button>
+                <Button Command="{Binding BroadcastPlayModeCommand}"
+                        CommandParameter="{Binding Source={x:Static vm:MessagePayload.DropBall}}">Drop Ball</Button>
+                <Button Command="{Binding BroadcastPlayModeCommand}"
+                        CommandParameter="{Binding Source={x:Static vm:MessagePayload.Ping}}">Ping</Button>
             </UniformGrid>
         </StackPanel>
     </Grid>

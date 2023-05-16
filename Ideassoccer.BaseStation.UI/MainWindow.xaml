@@ -82,6 +82,15 @@
             </Grid>
 
             <StatusBar Margin="-5">
+                <StatusBarItem>
+                    <TextBlock Margin="3 0 0 0"
+                               FontWeight="Medium"><Run Text="{Binding State.Value, Mode=OneWay}" /><Run Text=" (" /><Run Text="{Binding State.Info, Mode=OneWay}" /><Run Text=")" /></TextBlock>
+                </StatusBarItem>
+
+                <StatusBarItem>
+                    <TextBlock FontWeight="Medium"><Run Text="{Binding PlayMode.Value, Mode=OneWay}" /><Run Text=" (" /><Run Text="{Binding PlayMode.Info, Mode=OneWay}" /><Run Text=")" /></TextBlock>
+                </StatusBarItem>
+
                 <StatusBarItem HorizontalAlignment="Right"
                                Padding="0">
                     <StackPanel Orientation="Horizontal">
