@@ -10,7 +10,7 @@
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
                     d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
                     mc:Ignorable="d"
-                    Title="Ideassoccer BaseStation"
+                    Title="{Binding PageTitle}"
                     Height="720"
                     Width="1366"
                     MaxHeight="{Binding Source={x:Static SystemParameters.MaximizedPrimaryScreenHeight}}"

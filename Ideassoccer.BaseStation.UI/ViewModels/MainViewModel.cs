@@ -1,13 +1,11 @@
-﻿using Ideassoccer.BaseStation.UI.Enums;
-using Ideassoccer.BaseStation.UI.Models;
+﻿using Ideassoccer.BaseStation.UI.Models;
 using Ideassoccer.BaseStation.UI.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Globalization;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Text;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 
@@ -21,6 +19,7 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
         public ICommand CopyWiFiIPCommand { get; set; }
         public ICommand OpenLogsCommand { get; set; }
 
+        public string PageTitle { get; private set; }
         private Udp _udp;
         public RobotUdpClient UdpClient;
 
@@ -108,6 +107,8 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
         #region ctor
         public MainViewModel()
         {
+            PageTitle = "Ideassoccer BaseStation " + GetVersionInfoString();
+
             Mediator.Register(MediatorToken.UDPReceived, OnUdpReceived);
             Mediator.Register(MediatorToken.NetworkInterfaceChanged, OnNetChanged);
             Mediator.Register(MediatorToken.LogClose, (object e) => ShowLogs = false);
@@ -254,6 +255,12 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
         private void OnNetChanged(object evt)
         {
             HostIP = Networking.GetWiFiIP();
+        }
+
+        private string GetVersionInfoString()
+        {
+            return "v" + Assembly.GetExecutingAssembly().GetName().Version?.ToString()
+                ?? "";
         }
 
         //struct RecvMessage

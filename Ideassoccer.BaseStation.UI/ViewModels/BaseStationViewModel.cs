@@ -1,5 +1,4 @@
-﻿using Ideassoccer.BaseStation.UI.Enums;
-using Ideassoccer.BaseStation.UI.Models;
+﻿using Ideassoccer.BaseStation.UI.Models;
 using Ideassoccer.BaseStation.UI.Utilities;
 using System;
 using System.Collections.Generic;

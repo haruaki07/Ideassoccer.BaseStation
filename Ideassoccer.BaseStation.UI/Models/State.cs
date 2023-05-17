@@ -1,4 +1,4 @@
-﻿namespace Ideassoccer.BaseStation.UI.Enums
+﻿namespace Ideassoccer.BaseStation.UI.Models
 {
     public class State
     {
