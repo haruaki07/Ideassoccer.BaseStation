@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - master
-  release: 
-    types: [published]	
 
 jobs:
   build:
@@ -30,6 +28,9 @@ jobs:
 
     # Build the Windows Application Packaging project
     - name: Publish
+      env:
+        Runtime: win-x64
+        Configuration: Release
       run: >
         dotnet publish
         -r $env:Runtime
@@ -39,9 +40,6 @@ jobs:
         /p:SelfContained=true 
         /p:DebugType=None 
         /p:DebugSymbols=false
-      env:
-        Runtime: win-x64
-        Configuration: Release
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v1

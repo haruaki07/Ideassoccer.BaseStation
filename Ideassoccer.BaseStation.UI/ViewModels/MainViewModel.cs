@@ -90,13 +90,6 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
             set => RaisePropertyChanged(ref _showLogs, value);
         }
 
-        private string _mintaBola;
-        public string MintaBola
-        {
-            get => _mintaBola;
-            set => RaisePropertyChanged(ref _mintaBola, value);
-        }
-
         private State _state;
         public State State
         {
@@ -122,7 +115,6 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
             _showLogs = false;
             OpenLogsCommand = new Command(() => ShowLogs = true);
 
-            _mintaBola = "0";
             _state = State.Stop;
             _playMode = PlayMode.RKickOff;
 
