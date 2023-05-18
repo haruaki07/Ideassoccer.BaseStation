@@ -119,6 +119,10 @@ if (!$NoTag) {
 Write-Host "info Current version: $($currentVersion)"
 Write-Host "info New version: $($_newVersion)"
 if (!$NoTag) {
+    if ($tagOutput.Length -le 0) {
+        $tagOutput = $_newVersion
+    }
+
     Write-Host "info Tag created: $($tagOutput)"
 }
 else {

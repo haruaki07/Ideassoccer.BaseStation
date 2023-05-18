@@ -52,7 +52,7 @@ jobs:
     - name: Create archive
       run: |
         Compress-Archive `
-          -Path $env:PROJECT_NAME\bin\Release\net6.0-windows\win-x64\publish\*,$env:PROJECT_NAME\version.txt `
+          -Path $env:PROJECT_NAME\bin\Release\net6.0-windows\win-x64\publish\*,version.txt `
           -DestinationPath .\$env:ARCHIVE_NAME
 
     - name: Create release
