@@ -29,10 +29,6 @@ jobs:
     - name:  Restore dependencies
       run: dotnet restore
 
-    # update version.txt based on tag name
-    - name: Update version.txt
-      run: echo ${{ github.ref_name }} > .\$env:PROJECT_NAME\version.txt
-
     # Build the Windows Application Packaging project
     - name: Publish
       env:
@@ -65,11 +61,3 @@ jobs:
         draft: true
         generate_release_notes: true
         files: ${{ env.ARCHIVE_NAME }}
-
-    - name: Push version.txt
-      run: |
-        git config user.name github-actions
-        git config user.email github-actions@github.com
-        git add $env:PROJECT_NAME/version.txt
-        git commit -m "$env:APP_VERSION"
-        git push origin master
