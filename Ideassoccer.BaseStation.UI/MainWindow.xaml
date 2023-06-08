@@ -65,7 +65,8 @@
 
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="640" />
+                <ColumnDefinition Width="500" />
+                <ColumnDefinition Width="300" />
             </Grid.ColumnDefinitions>
 
             <GroupBox Header="BaseStation Control">
@@ -73,11 +74,16 @@
                                              Margin="10"
                                              DataContext="{Binding BstaVM}" />
             </GroupBox>
+            <GroupBox Header="RefBox"
+                      Grid.Column="1">
+                <view:RefBoxView Margin="10" />
+            </GroupBox>
         </Grid>
 
         <StackPanel Grid.Row="2"
                     Orientation="Vertical">
-            <Grid Visibility="{Binding ShowLogs, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid Visibility="{Binding ShowLogs, Converter={StaticResource BooleanToVisibilityConverter}}"
+                  d:Visibility="Collapsed">
                 <view:LogView />
             </Grid>
 

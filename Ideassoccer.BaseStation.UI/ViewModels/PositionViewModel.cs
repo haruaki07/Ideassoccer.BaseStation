@@ -35,7 +35,7 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
             Mediator.Register(MediatorToken.Robot1Moved, OnRobot1Moved);
             Mediator.Register(MediatorToken.Robot2Moved, OnRobot2Moved);
 
-            var bg = new BitmapImage(new Uri("pack://application:,,,/Ideassoccer.BaseStation.UI;component/Resources/field.png"));
+            var bg = new BitmapImage(new Uri("pack://application:,,,/Resources/field.png"));
             _canvasBackground = new ImageBrush(bg);
 
             _robot1 = robot1;

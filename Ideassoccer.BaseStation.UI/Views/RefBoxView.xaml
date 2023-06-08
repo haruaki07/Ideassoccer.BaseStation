@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="Ideassoccer.BaseStation.UI.Views.RefBoxView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:Ideassoccer.BaseStation.UI.Converters"
+             xmlns:viewmodels="clr-namespace:Ideassoccer.BaseStation.UI.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:RobotViewModel}"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:BytesToStringConverter x:Key="BytesToStringConverter" />
+        <converters:IPEndPointToAddressConverter x:Key="IPEndPointToAddressConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="0 0 0 10">
+            <TextBlock Text="TCP Endpoint: " />
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox IsReadOnly="True" />
+                <Button Grid.Column="1"
+                        Margin="10 0 0 0">Edit</Button>
+            </Grid>
+        </StackPanel>
+
+        <Button Grid.Row="1"
+                Margin="0 0 0 10">Start server</Button>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="109" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0"
+                       Text="Log:" />
+            <TextBox Style="{StaticResource TextBoxBaseStyle}"
+                     Grid.Row="1"
+                     VerticalAlignment="Stretch"
+                     VerticalContentAlignment="Top"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Visible"
+                     IsReadOnly="True">
+                <TextBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Copy"
+                                  Command="ApplicationCommands.Copy" />
+                        <MenuItem Header="Clear" />
+                    </ContextMenu>
+                </TextBox.ContextMenu>
+            </TextBox>
+        </Grid>
+    </Grid>
+</UserControl>

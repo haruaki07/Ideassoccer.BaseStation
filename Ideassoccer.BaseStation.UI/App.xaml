@@ -9,7 +9,7 @@
                 <!--theme-->
                 <ResourceDictionary Source="/AakStudio.Shell.UI;component/Themes/VisualStudio2019/DarkTheme.xaml" />
                 <!--icons-->
-                <ResourceDictionary Source="pack://application:,,,/Ideassoccer.BaseStation.UI;component/Resources/Icons.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <!--application styles-->

@@ -47,17 +47,9 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
         public struct Icons
         {
             public BitmapImage Start =>
-                new(
-                    new Uri(
-                        "pack://application:,,,/Ideassoccer.BaseStation.UI;component/Resources/icons/run.png"
-                    )
-                );
+                new(new Uri("pack://application:,,,/Resources/icons/run.png"));
             public BitmapImage Stop =>
-                new(
-                    new Uri(
-                        "pack://application:,,,/Ideassoccer.BaseStation.UI;component/Resources/icons/stop.png"
-                    )
-                );
+                new(new Uri("pack://application:,,,/Resources/icons/stop.png"));
         }
 
         public Icons Icon => new Icons();
