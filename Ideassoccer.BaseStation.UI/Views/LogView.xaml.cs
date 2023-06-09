@@ -15,8 +15,11 @@ namespace Ideassoccer.BaseStation.UI.Views
 
             Action scrollAction = new(() =>
             {
-                if (logScrollViewer.Template.FindName("PART_ContentHost", logScrollViewer) is ScrollViewer scrollViewer)
-                    scrollViewer.ScrollToBottom();
+                this.Dispatcher.Invoke(() =>
+                {
+                    if (logScrollViewer.Template.FindName("PART_ContentHost", logScrollViewer) is ScrollViewer scrollViewer)
+                        scrollViewer.ScrollToBottom();
+                });
             });
             this.DataContext = new LogViewModel(scrollAction);
         }

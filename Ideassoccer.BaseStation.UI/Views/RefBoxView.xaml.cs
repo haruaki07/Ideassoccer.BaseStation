@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using Ideassoccer.BaseStation.UI.Utilities;
+using Ideassoccer.BaseStation.UI.ViewModels;
+using System.Windows.Controls;
 
 namespace Ideassoccer.BaseStation.UI.Views
 {
@@ -10,6 +12,15 @@ namespace Ideassoccer.BaseStation.UI.Views
         public RefBoxView()
         {
             InitializeComponent();
+            Mediator.Register(MediatorToken.RefBoxReceived, OnRefBoxReceived);
+        }
+
+        public void OnRefBoxReceived(object e)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                logsTextBox.ScrollToEnd();
+            });
         }
     }
 }

@@ -8,5 +8,6 @@
         public static string NetworkInterfaceChanged = "net-if-changed";
         public static string LogPush = "log-push";
         public static string LogClose = "log-close";
+        public static string RefBoxReceived = "refbox-received";
     }
 }

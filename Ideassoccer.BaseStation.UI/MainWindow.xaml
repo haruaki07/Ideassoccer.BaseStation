@@ -76,7 +76,9 @@
             </GroupBox>
             <GroupBox Header="RefBox"
                       Grid.Column="1">
-                <view:RefBoxView Margin="10" />
+                <view:RefBoxView x:Name="refBoxView"
+                                 Margin="10"
+                                 DataContext="{Binding RefBoxVM}" />
             </GroupBox>
         </Grid>
 

@@ -32,5 +32,8 @@
     <Setting Name="Robot2EndpointPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">4242</Value>
     </Setting>
+    <Setting Name="RefBoxEndPoint" Type="System.String" Scope="User">
+      <Value Profile="(Default)">127.0.0.1:9000</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

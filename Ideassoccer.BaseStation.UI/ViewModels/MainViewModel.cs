@@ -79,6 +79,13 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
             set => RaisePropertyChanged(ref _bstavm, value);
         }
 
+        private RefBoxViewModel _refboxVM;
+        public RefBoxViewModel RefBoxVM
+        {
+            get => _refboxVM;
+            set => RaisePropertyChanged(ref _refboxVM, value);
+        }
+
         private string? _hostIP;
         public string? HostIP { get => _hostIP; set => RaisePropertyChanged(ref _hostIP, value); }
 
@@ -166,7 +173,13 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
                 new Action<PlayMode>((newMode) => PlayMode = newMode)
             );
 
-            ListenUdpCommand = new Command(() => { _ = _udp.Listen(); });
+            IPEndPoint refboxEp;
+            if (!IPEndPoint.TryParse(Properties.Settings.Default.RefBoxEndPoint, out refboxEp!))
+                refboxEp = new IPEndPoint(IPAddress.Loopback, 9000);
+
+            _refboxVM = new RefBoxViewModel(refboxEp);
+
+            ListenUdpCommand = new Command(() => _ = _udp.Listen());
             GetWiFiIPCommand = new Command(() =>
             {
                 HostIP = Networking.GetWiFiIP();
@@ -177,6 +190,8 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
             {
                 if (HostIP != null) Clipboard.SetText(HostIP);
             });
+
+
         }
         #endregion
 

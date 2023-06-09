@@ -16,6 +16,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="AakStudio.Shell.UI" Version="0.1.5-alpha-0711" />
+	  <PackageReference Include="SuperSimpleTcp" Version="3.0.10" />
 	</ItemGroup>
 
 	<ItemGroup>

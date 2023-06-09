@@ -5,11 +5,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:Ideassoccer.BaseStation.UI.Converters"
              xmlns:viewmodels="clr-namespace:Ideassoccer.BaseStation.UI.ViewModels"
-             d:DataContext="{d:DesignInstance Type=viewmodels:RobotViewModel}"
+             d:DataContext="{d:DesignInstance Type=viewmodels:RefBoxViewModel}"
              mc:Ignorable="d">
     <UserControl.Resources>
         <converters:BytesToStringConverter x:Key="BytesToStringConverter" />
         <converters:IPEndPointToAddressConverter x:Key="IPEndPointToAddressConverter" />
+        <converters:BooleanToVisibilityCollapseConverter x:Key="BooleanToVisibilityCollapseConverter" />
+        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+
+        <converters:ValueConverterGroup x:Key="InverseConnectedConverter">
+            <converters:InverseBooleanConverter />
+            <converters:BooleanToVisibilityCollapseConverter />
+        </converters:ValueConverterGroup>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -18,21 +25,34 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <StackPanel Margin="0 0 0 10">
-            <TextBlock Text="TCP Endpoint: " />
+            <TextBlock Text="RefBox Endpoint: " />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBox IsReadOnly="True" />
+                <TextBox IsReadOnly="True"
+                         Text="{Binding Ep, Converter={StaticResource IPEndPointToAddressConverter}}" />
                 <Button Grid.Column="1"
-                        Margin="10 0 0 0">Edit</Button>
+                        Margin="10 0 0 0"
+                        Command="{Binding EditEndpointCommand}"
+                        IsEnabled="{Binding Connected, Converter={StaticResource InverseBooleanConverter}}">Edit</Button>
             </Grid>
         </StackPanel>
 
+
         <Button Grid.Row="1"
-                Margin="0 0 0 10">Start server</Button>
+                Margin="0 0 0 10"
+                Command="{Binding ConnectCommand}"
+                Visibility="{Binding Connected, Converter={StaticResource InverseConnectedConverter}}"
+                IsEnabled="{Binding Loading, Converter={StaticResource InverseBooleanConverter}}">Connect</Button>
+
+        <Button Grid.Row="1"
+                Margin="0 0 0 10"
+                Command="{Binding DisconnectCommand}"
+                Visibility="{Binding Connected, Converter={StaticResource BooleanToVisibilityCollapseConverter}}"
+                IsEnabled="{Binding Loading, Converter={StaticResource InverseBooleanConverter}}">Disconnect</Button>
 
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
@@ -41,19 +61,22 @@
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0"
                        Text="Log:" />
-            <TextBox Style="{StaticResource TextBoxBaseStyle}"
+            <TextBox x:Name="logsTextBox"
+                     Style="{StaticResource TextBoxBaseStyle}"
                      Grid.Row="1"
                      VerticalAlignment="Stretch"
                      VerticalContentAlignment="Top"
                      TextWrapping="Wrap"
                      AcceptsReturn="True"
                      VerticalScrollBarVisibility="Visible"
-                     IsReadOnly="True">
+                     IsReadOnly="True"
+                     Text="{Binding RefBoxLogs}">
                 <TextBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Copy"
                                   Command="ApplicationCommands.Copy" />
-                        <MenuItem Header="Clear" />
+                        <MenuItem Header="Clear"
+                                  Command="{Binding ClearLogsCommand}" />
                     </ContextMenu>
                 </TextBox.ContextMenu>
             </TextBox>
