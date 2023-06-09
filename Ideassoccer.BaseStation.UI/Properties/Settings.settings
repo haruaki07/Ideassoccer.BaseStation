@@ -35,5 +35,20 @@
     <Setting Name="RefBoxEndPoint" Type="System.String" Scope="User">
       <Value Profile="(Default)">127.0.0.1:9000</Value>
     </Setting>
+    <Setting Name="RobotGKId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">gk</Value>
+    </Setting>
+    <Setting Name="RobotGKName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Robot Kiper</Value>
+    </Setting>
+    <Setting Name="RobotGKUdpPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4990</Value>
+    </Setting>
+    <Setting Name="RobotGKEndpointAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.0.108</Value>
+    </Setting>
+    <Setting Name="RobotGKEndpointPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4242</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

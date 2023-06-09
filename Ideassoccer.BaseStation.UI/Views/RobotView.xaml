@@ -18,6 +18,7 @@
     <UserControl.Resources>
         <converters:BytesToStringConverter x:Key="BytesToStringConverter" />
         <converters:IPEndPointToAddressConverter x:Key="IPEndPointToAddressConverter" />
+        <converters:DateTimeToTimeStringConverter x:Key="DateTimeToTimeStringConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -69,7 +70,7 @@
                             <GridViewColumn Header="Type"
                                             DisplayMemberBinding="{Binding Type}" />
                             <GridViewColumn Header="Time"
-                                            DisplayMemberBinding="{Binding Time}" />
+                                            DisplayMemberBinding="{Binding Time,Converter={StaticResource DateTimeToTimeStringConverter}}" />
                             <GridViewColumn Header="Message"
                                             DisplayMemberBinding="{Binding Bytes, Converter={StaticResource BytesToStringConverter}}" />
                         </GridView.Columns>

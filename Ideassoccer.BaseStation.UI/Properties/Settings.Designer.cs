@@ -154,5 +154,65 @@ namespace Ideassoccer.BaseStation.UI.Properties {
                 this["RefBoxEndPoint"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("gk")]
+        public string RobotGKId {
+            get {
+                return ((string)(this["RobotGKId"]));
+            }
+            set {
+                this["RobotGKId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Robot Kiper")]
+        public string RobotGKName {
+            get {
+                return ((string)(this["RobotGKName"]));
+            }
+            set {
+                this["RobotGKName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4990")]
+        public int RobotGKUdpPort {
+            get {
+                return ((int)(this["RobotGKUdpPort"]));
+            }
+            set {
+                this["RobotGKUdpPort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.0.108")]
+        public string RobotGKEndpointAddress {
+            get {
+                return ((string)(this["RobotGKEndpointAddress"]));
+            }
+            set {
+                this["RobotGKEndpointAddress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4242")]
+        public int RobotGKEndpointPort {
+            get {
+                return ((int)(this["RobotGKEndpointPort"]));
+            }
+            set {
+                this["RobotGKEndpointPort"] = value;
+            }
+        }
     }
 }

@@ -30,6 +30,13 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
             set => RaisePropertyChanged(ref _udpPort, value);
         }
 
+        private Robot _robotGk;
+        public Robot RobotGk
+        {
+            get => _robotGk;
+            set => RaisePropertyChanged(ref _robotGk, value);
+        }
+
         private Robot _robot1;
         public Robot Robot1
         {
@@ -42,6 +49,13 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
         {
             get => _robot2;
             set => RaisePropertyChanged(ref _robot2, value);
+        }
+
+        private RobotViewModel _robotGkvm;
+        public RobotViewModel RobotGkVM
+        {
+            get => _robotGkvm;
+            set => RaisePropertyChanged(ref _robotGkvm, value);
         }
 
         private RobotViewModel _robot1vm;
@@ -128,6 +142,16 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
 
             _udp = new Udp(new IPEndPoint(IPAddress.Any, UdpPort));
             _udp.Received += _udp_Received;
+
+            _robotGk = new Robot(
+                Properties.Settings.Default.RobotGKId,
+                Properties.Settings.Default.RobotGKName,
+                new IPEndPoint(
+                    IPAddress.Parse(Properties.Settings.Default.RobotGKEndpointAddress),
+                    Properties.Settings.Default.RobotGKEndpointPort
+                ),
+                null
+            );
             _robot1 = new Robot(
                 Properties.Settings.Default.Robot1Id,
                 Properties.Settings.Default.Robot1Name,
@@ -149,10 +173,12 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
 
             UdpClient = new RobotUdpClient(_udp, new Robots
             {
+                { RobotGk.Id, RobotGk },
                 { Robot1.Id, Robot1 },
                 { Robot2.Id, Robot2 },
             });
 
+            _robotGkvm = new RobotViewModel(_robotGk, Properties.Settings.Default.RobotGKUdpPort);
             _robot1vm = new RobotViewModel(_robot1, Properties.Settings.Default.Robot1UdpPort);
             _robot2vm = new RobotViewModel(_robot2, Properties.Settings.Default.Robot2UdpPort);
 
@@ -161,6 +187,7 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
             _cbItems = new Dictionary<string, string>
             {
                 { "0", "All"},
+                {_robotGk.Id, _robotGk.Name },
                 {_robot1.Id, _robot1.Name },
                 {_robot2.Id, _robot2.Name },
             };

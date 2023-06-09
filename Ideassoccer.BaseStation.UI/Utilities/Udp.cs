@@ -3,7 +3,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 
 namespace Ideassoccer.BaseStation.UI.Utilities
 {
@@ -41,7 +40,7 @@ namespace Ideassoccer.BaseStation.UI.Utilities
             {
                 if (e is OperationCanceledException) return;
 
-                MessageBox.Show("Error listen udp: " + e.Message);
+                Logs.Push("Error listen udp: " + e.Message);
                 StopListening();
             }
         }

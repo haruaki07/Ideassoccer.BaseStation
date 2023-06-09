@@ -153,7 +153,7 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
 
         private void RefBoxLogPush(string msg)
         {
-            RefBoxLogs += DateTime.Now.ToString("HH:mm:ss") + " " +  msg + Environment.NewLine;
+            RefBoxLogs += DateTime.Now.ToString("T") + " " +  msg + Environment.NewLine;
             Mediator.NotifyColleagues(MediatorToken.RefBoxReceived, 0);
         }
     }
