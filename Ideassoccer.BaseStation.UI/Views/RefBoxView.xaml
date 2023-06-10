@@ -8,10 +8,47 @@
              d:DataContext="{d:DesignInstance Type=viewmodels:RefBoxViewModel}"
              mc:Ignorable="d">
     <UserControl.Resources>
+        <ControlTemplate x:Key="TeamRadioButton"
+                         TargetType="RadioButton">
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center">
+                <Border Name="check"
+                        Background="{StaticResource CommonControlsButtonDisabled}"
+                        BorderThickness="1"
+                        BorderBrush="{StaticResource CommonControlsButtonBorderDisabled}"
+                        Width="16"
+                        Height="16"
+                        Margin="0 0 5 5"
+                        CornerRadius="2" />
+                <ContentPresenter HorizontalAlignment="Center"
+                                  Margin="{TemplateBinding Padding}"
+                                  VerticalAlignment="Top"
+                                  Content="{TemplateBinding Content}" />
+            </StackPanel>
+            <ControlTemplate.Triggers>
+                <Trigger Property="ToggleButton.IsMouseOver"
+                         Value="true">
+                    <Setter TargetName="check"
+                            Property="BorderBrush"
+                            Value="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type RadioButton}}}" />
+                </Trigger>
+                <Trigger Property="IsChecked"
+                         Value="true">
+                    <Setter TargetName="check"
+                            Property="BorderBrush"
+                            Value="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type RadioButton}}}" />
+                    <Setter TargetName="check"
+                            Property="Background"
+                            Value="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type RadioButton}}}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
         <converters:BytesToStringConverter x:Key="BytesToStringConverter" />
         <converters:IPEndPointToAddressConverter x:Key="IPEndPointToAddressConverter" />
         <converters:BooleanToVisibilityCollapseConverter x:Key="BooleanToVisibilityCollapseConverter" />
         <converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <converters:TeamColorToCheckedConverter x:Key="TeamColorToCheckedConverter" />
 
         <converters:ValueConverterGroup x:Key="InverseConnectedConverter">
             <converters:InverseBooleanConverter />
@@ -19,67 +56,98 @@
         </converters:ValueConverterGroup>
     </UserControl.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="1*" />
-        </Grid.RowDefinitions>
-        <StackPanel Margin="0 0 0 10">
-            <TextBlock Text="RefBox Endpoint: " />
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"
+                              MinWidth="250" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
 
-                <TextBox IsReadOnly="True"
-                         Text="{Binding Ep, Converter={StaticResource IPEndPointToAddressConverter}}" />
-                <Button Grid.Column="1"
-                        Margin="10 0 0 0"
-                        Command="{Binding EditEndpointCommand}"
-                        IsEnabled="{Binding Connected, Converter={StaticResource InverseBooleanConverter}}">Edit</Button>
-            </Grid>
-        </StackPanel>
-
-
-        <Button Grid.Row="1"
-                Margin="0 0 0 10"
-                Command="{Binding ConnectCommand}"
-                Visibility="{Binding Connected, Converter={StaticResource InverseConnectedConverter}}"
-                IsEnabled="{Binding Loading, Converter={StaticResource InverseBooleanConverter}}">Connect</Button>
-
-        <Button Grid.Row="1"
-                Margin="0 0 0 10"
-                Command="{Binding DisconnectCommand}"
-                Visibility="{Binding Connected, Converter={StaticResource BooleanToVisibilityCollapseConverter}}"
-                IsEnabled="{Binding Loading, Converter={StaticResource InverseBooleanConverter}}">Disconnect</Button>
-
-        <Grid Grid.Row="2">
+        <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="109" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0"
-                       Text="Log:" />
-            <TextBox x:Name="logsTextBox"
-                     Style="{StaticResource TextBoxBaseStyle}"
-                     Grid.Row="1"
-                     VerticalAlignment="Stretch"
-                     VerticalContentAlignment="Top"
-                     TextWrapping="Wrap"
-                     AcceptsReturn="True"
-                     VerticalScrollBarVisibility="Visible"
-                     IsReadOnly="True"
-                     Text="{Binding RefBoxLogs}">
-                <TextBox.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Copy"
-                                  Command="ApplicationCommands.Copy" />
-                        <MenuItem Header="Clear"
-                                  Command="{Binding ClearLogsCommand}" />
-                    </ContextMenu>
-                </TextBox.ContextMenu>
-            </TextBox>
+            <StackPanel Margin="0 0 0 10">
+                <TextBlock Text="RefBox Endpoint: " />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox IsReadOnly="True"
+                             Text="{Binding Ep, Converter={StaticResource IPEndPointToAddressConverter}}" />
+                    <Button Grid.Column="1"
+                            Margin="10 0 0 0"
+                            Command="{Binding EditEndpointCommand}"
+                            IsEnabled="{Binding Connected, Converter={StaticResource InverseBooleanConverter}}">Edit</Button>
+                </Grid>
+            </StackPanel>
+
+
+            <Button Grid.Row="1"
+                    Margin="0 0 0 10"
+                    Command="{Binding ConnectCommand}"
+                    Visibility="{Binding Connected, Converter={StaticResource InverseConnectedConverter}}"
+                    IsEnabled="{Binding Loading, Converter={StaticResource InverseBooleanConverter}}">Connect</Button>
+
+            <Button Grid.Row="1"
+                    Margin="0 0 0 10"
+                    Command="{Binding DisconnectCommand}"
+                    Visibility="{Binding Connected, Converter={StaticResource BooleanToVisibilityCollapseConverter}}"
+                    IsEnabled="{Binding Loading, Converter={StaticResource InverseBooleanConverter}}">Disconnect</Button>
+
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="109" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           Text="Log:" />
+                <TextBox x:Name="logsTextBox"
+                         Style="{StaticResource TextBoxBaseStyle}"
+                         Grid.Row="1"
+                         VerticalAlignment="Stretch"
+                         VerticalContentAlignment="Top"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Visible"
+                         IsReadOnly="True"
+                         Text="{Binding RefBoxLogs}"
+                         MaxWidth="250">
+                    <TextBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Copy"
+                                      Command="ApplicationCommands.Copy" />
+                            <MenuItem Header="Clear"
+                                      Command="{Binding ClearLogsCommand}" />
+                        </ContextMenu>
+                    </TextBox.ContextMenu>
+                </TextBox>
+            </Grid>
         </Grid>
+
+        <StackPanel Grid.Column="1"
+                    Orientation="Vertical"
+                    Margin="10 0 0 0">
+            <TextBlock>Team</TextBlock>
+            <RadioButton GroupName="team"
+                         Template="{DynamicResource TeamRadioButton}"
+                         Content="Cyan"
+                         Background="Cyan"
+                         IsEnabled="{Binding Connected}"
+                         IsChecked="{Binding Team, Converter={StaticResource TeamColorToCheckedConverter}, ConverterParameter='Cyan', Mode=OneWay}"
+                         Command="{Binding TeamChangeCommand}"
+                         CommandParameter="Cyan" />
+            <RadioButton GroupName="team"
+                         Template="{DynamicResource TeamRadioButton}"
+                         Content="Magenta"
+                         Background="Magenta"
+                         IsEnabled="{Binding Connected}"
+                         IsChecked="{Binding Team, Converter={StaticResource TeamColorToCheckedConverter}, ConverterParameter='Magenta', Mode=OneWay}"
+                         Command="{Binding TeamChangeCommand}"
+                         CommandParameter="Magenta" />
+        </StackPanel>
     </Grid>
 </UserControl>

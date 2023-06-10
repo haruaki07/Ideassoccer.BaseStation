@@ -15,6 +15,7 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
         public ICommand DisconnectCommand { get; set; }
         public ICommand EditEndpointCommand { get; set; }
         public ICommand ClearLogsCommand { get; set; }
+        public ICommand TeamChangeCommand { get; set; }
 
         private SimpleTcpClient _client;
 
@@ -46,17 +47,32 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
             set => RaisePropertyChanged(ref _refBoxLogs, value);
         }
 
+        private string _team;
+        public string Team
+        {
+            get => _team;
+            set => RaisePropertyChanged(ref _team, value);
+        }
+
         public RefBoxViewModel(IPEndPoint ep)
         {
             _ep = ep;
             InitTcpClient(out _client, ep);
             _connected = false;
             _refBoxLogs = "";
+            _team = "";
 
             ConnectCommand = new Command(HandleConnectCommand);
             DisconnectCommand = new Command(HandleDisconnectCommand);
             EditEndpointCommand = new Command(HandleEditEndpointCommand);
             ClearLogsCommand = new Command(() => RefBoxLogs = "");
+            TeamChangeCommand = new CommandParam<string>(HandleTeamChangeCommand);
+        }
+
+        private void HandleTeamChangeCommand(string team)
+        {
+            Team = team;
+            RefBoxLogPush(string.Format("> Team '{0}' selected!", team));
         }
 
         private async void HandleDisconnectCommand()
@@ -133,13 +149,14 @@ namespace Ideassoccer.BaseStation.UI.ViewModels
         private void _client_Disconnected(object? sender, ConnectionEventArgs e)
         {
             Connected = false;
+            Team = "";
             RefBoxLogPush("> Disconnected from RefBox!");
         }
 
         private void _client_Connected(object? sender, ConnectionEventArgs e)
         {
             Connected = true;
-            RefBoxLogPush("> Connected to RefBox!");
+            RefBoxLogPush("> Connected to RefBox! Please select a team.");
         }
 
         private void InitTcpClient(out SimpleTcpClient c, IPEndPoint ep, int timeoutMs = 3000)
